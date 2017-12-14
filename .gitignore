@@ -1,4 +1,3 @@
-imagebox/*
 *.bbl
 *.aux
 *.txt
@@ -8,6 +7,8 @@ imagebox/*
 *.fdb_latexmk
 *.flsmain.pdf
 *.fls
-*.out
-main.pdf
-main.synctex.gz
+graduate.pdf
+graduate.synctex.gz
+*.pyc
+*.csv
+*.toc
