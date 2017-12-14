@@ -1,0 +1,13 @@
+imagebox/*
+*.bbl
+*.aux
+*.txt
+*.dvi
+*.log
+*.blg
+*.fdb_latexmk
+*.flsmain.pdf
+*.fls
+*.out
+main.pdf
+main.synctex.gz
