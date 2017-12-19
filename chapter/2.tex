@@ -1,5 +1,68 @@
 \chapter{Race Logicとその実装に関する課題}
-本章では，
+本章では，Race Logicの基本原理とCMOSによる実装をまとめ，その後Race Logicの検討において解決すべき課題について述べる．
 \section{Race Logic}
-\section{CMOSによるレースロジック実装}
+Race Logicの回路はセルと呼ばれる単位構造の繰り返しによって構成できる．
+基本的な構造の図を図\ref{dammy}に示す．
+セルは上・斜上・左のセルから信号の入力を受け付ける．
+信号が入力された後，設定された条件に合わせて適切な処理をした後に，
+次のセルへ信号を出力する．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.01]{fig/dammy.jpg}
+\caption{dammy}
+\label{dammy}
+\end{center}
+\end{figure}
+
+簡単な例を用いて説明する．文字列長がそれぞれN,Mのある2つの文字列を比較し，その類似度を計算できる回路を考える．
+回路の競争条件には遅延時間差を設定し，1つのセルを通過する時間が１クロックサイクルとなるように処理を行う．図\ref{dammy}にその回路を示す．
+セルでは一文字ごとにパタンの比較が行われる．
+右・下のセルへは無条件で信号が伝搬，比較する文字が一致した場合には斜下に信号が伝搬し，不一致の場合には伝搬しない．
+図\ref{dammy}には Race Logicの構造を簡易化した図を示す．
+図の中の数字がそのセルに信号が到達した時のサイクル数を表す．
+図\ref{dammy}のように比較するパタンが完全に一致した場合，
+Race Logicに信号が入力されてから出力されるまでの回路遅延はMクロックサイクル（$N¥leqM$）となる．
+図\ref{dammy}のような場合では，
+Race Logicに信号が入力されてから出力されるまでの回路遅延は（$M+不一致である文字数$）クロックサイクル（$N¥leqM$）となる．
+出力までにかかる回路遅延の時間差を測ることで，2つの文字列の一致度を見ることができる．
+
+例において，セルの機能をDフリップフロップ，OR,ANDゲートを用いて実現した．
+しかし，回路に設定する競争条件によって実現すべきセルの機能は変わり，
+その機能を実現するために選択できる素子に制限はない．
+更に，例ではDフリップフロップを用いることで次のセルへの伝搬をクロックと同期させる同期型の構造を取ったが，
+非同期での伝搬でもRace Logicの機能を実現することは可能である．これに関しては次節で詳しく述べる．
+
+\section{CMOSによるRace Logic実装}
+本節では，CMOSを用いたRace Logic実装について説明する．
+Race Logicにはセルへの信号伝搬をクロックと同期させるもの同期型と，セルへの信号伝搬をクロックと同期させない非同期型とがある．
+それぞれについて回路を見ていく．
+
+\begin{itemize}
+\item CMOSによる同期型Race Logic実装
+図\ref{dammy1}
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.01]{fig/dammy.jpg}
+\caption{dammy1}
+\label{dammy1}
+\end{center}
+\end{figure}
+
+\item CMOSによる非同期型Race Logic実装
+\end{itemize}
+図\ref{dammy2}
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.01]{fig/dammy.jpg}
+\caption{dammy2}
+\label{dammy2}
+\end{center}
+\end{figure}
+
 \section{解決すべき課題}
+これまでRace Logicの基本原理を述べ，CMOSによるRace Logic実装を見てきた．
+CMOSによって実装されたRace Logicについては，その有効性が明らかにされ，
+性能・面積・消費電力密度なども報告されている．
+しかしながら，Race Logicの設計選択肢はCMOSだけに限られず，
+CMOS以外の素子を選択した場合の可能性については明らかになっていない．
+Race Logicの更なる高性能化を目的とし，本論文ではナノフォトニック・デバイスによる実装に焦点を当てる．
