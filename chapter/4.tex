@@ -92,17 +92,59 @@ iとjは図\ref{dammy}に示す行と列のインデックスである．
 \item 波長多重可能性\\
 \end{itemize}
 \begin{table}[t]
-        \begin{center}
-        \caption{設計選択肢 }
-        \begin{tabular}{|c|c|c|c|}\hline
-選択肢&○&配列数&波長多重可能性 \\ \hline \hline
+\begin{center}
+\caption{設計選択肢 }
+\begin{tabular}{|c|c|c|c|}\hline
+選択肢&耐ノイズ性&配列数&波長多重可能性 \\ \hline \hline
 遅延時間差&耐ノイズ性&配列数&波長多重可能性 \\ \hline
 位相差&耐ノイズ性&配列数&波長多重可能性 \\ \hline
 信号強度差&耐ノイズ性&配列数&波長多重可能性 \\ \hline
 波長差&耐ノイズ性&配列数&波長多重可能性 \\ \hline
-        \end{tabular}
-        \label{tab:sentakushi}
-        \end{center}
+\end{tabular}
+\label{tab:sentakushi}
+\end{center}
 \end{table}
 
 \section{提案回路}
+本節では，第4.2節で整理した設計選択肢の中から実現可能なものを選択し，それぞれ回路を提案する．
+今回選択したのは，遅延時間差・位相差・伝搬信号強度差の3つである．
+今回の実装では，3つの選択肢共に図（）に示す構成を基本としている．それぞれで，セルの詳細な構成とカウンタで測定するものが異なっている．
+
+\begin{itemize}
+\item 遅延時間差を用いた光Race logic回路\\
+図（）に遅延時間差を用いた光Race logic回路のセル構造を示す．
+また，カウンタではアレイに光伝搬信号が入力されてから出力されるまでの時間を計測する．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.05]{fig/dammy.jpg}
+\caption{dammy}
+\label{dammy}
+\end{center}
+\end{figure}
+
+\item 位相差を用いた光Race logic回路\\
+図（）に位相差を用いた光Race logic回路のセル構造を示す．
+また，カウンタではアレイに出力された光伝搬信号の位相を計測する．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.05]{fig/dammy.jpg}
+\caption{dammy}
+\label{dammy}
+\end{center}
+\end{figure}
+
+\item 伝搬信号強度差を用いた光Race logic回路\\
+図（）に伝搬信号強度差を用いた光Race logic回路のセル構造を示す．
+また，カウンタではアレイに出力された光伝搬信号の信号強度を計測する．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.05]{fig/dammy.jpg}
+\caption{dammy}
+\label{dammy}
+\end{center}
+\end{figure}
+
+\end{itemize}
+
+提案した3つの回路について，次章にて検証・評価を行う．
+
