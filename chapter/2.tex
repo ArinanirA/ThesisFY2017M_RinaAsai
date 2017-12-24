@@ -7,8 +7,8 @@ CMOSによる実装例をまとめ，
 \section{Race Logic}
 Race Logicの基本概念は，回路に設定された競合条件を使用して出力から得られる何らかの「差」で情報を表現し，
 有用な計算を実行することである．
-ace Logicの計算は有効非巡回グラフ
-（DAG，Directed Acyclic Graph）の最短・最長経路探索に帰結する．
+Race Logicの計算は有効非巡回グラフ
+（Directed Acyclic Graph,DAG）の最短・最長経路探索に帰結する．
 有効非巡回グラフとは，グラフ理論における閉路のない有向グラフの事である．
 有向グラフは頂点と有向辺から構成され，辺は頂点同士をつなぐが，ある頂点 v から出発し辺をたどっても、頂点 v に戻ってこないというものである．
 各経路において条件に合わせて重み付けを行い，出力時にその重みの総和を見る．
@@ -45,20 +45,48 @@ DNAの塩基配列やタンパク質アミノ酸配列の研究は，
 編集距離は，一方の文字列をもう一方の文字列に変形するのに必要な手順である一文字の挿入・削除・置換に
 それぞれ編集スコアを割り当て，そのスコアの和として定義される．
 編集距離の理解を助けるために，長さN = 5の文字列A= "TCGAT"と長さM = 5の文字列B= "GTCAC"を考える．
-図（）は，文字列AをBに変換する2つの方法を示している．
+\begin{figure}[ht!]
+    \begin{center}
+        \subfigure[]{
+        \includegraphics[keepaspectratio, scale=0.3]{fig/2/ed1.eps}
+        \label{fig:ed1}
+      }\\
+    \subfigure[]{
+        \includegraphics[keepaspectratio, scale=0.3]{fig/2/ed2.eps}
+        \label{fig:ed2}
+      }\\
+    \subfigure[]{
+        \includegraphics[keepaspectratio, scale=0.3]{fig/2/ed3.eps}
+        \label{fig:ed3}
+     }\\
+    \subfigure[]{
+        \includegraphics[keepaspectratio, scale=0.3]{fig/2/ed4.eps}
+        \label{fig:ed4}
+      }\\
+     \subfigure[]{
+        \includegraphics[keepaspectratio, scale=0.65]{fig/2/ed5.eps}
+        \label{fig:ed5}
+      }
+    \caption{編集距離と編集グラフ}
+    \label{fig:ed}
+    \end{center}
+  \end{figure}
+図\ref{fig:ed1}と図\ref{fig:ed3}は，文字列AをBに変換する2つの方法を示している．
 上の行のスペースは挿入を表し，下の行のスペースは削除を表す．
 両方の行に同じ文字がある列は一致，異なる文字がある列は不一致と呼ぶ．
-特に、図（）の方法は文字GとTを削除し，GとCを挿入する一方で，図\ref{}の方法は文字列Aを完全に削除して文字列Bを挿入している．
+特に、図\ref{fig:ed1}の方法は文字GとTを削除し，GとCを挿入する一方で，
+図\ref{fig:ed3}の方法は文字列Aを完全に削除して文字列Bを挿入している．
 
-図\ref{}および図\ref{}は， 2つのアラインメント方法の代替表現である．
-任意の位置の数字は，図\ref{}および図\ref{}の方法においてその位置までに存
+図\ref{fig:ed2}および図\ref{fig:ed4}は， 2つのアラインメント方法の代替表現である．
+任意の位置の数字は，図\ref{fig:ed1}および図\ref{fig:ed3}の方法においてその位置までに存
 在する記号の数を示している．
-この表示は各列の数値が図\ref{}に示す2次元の編集グラフの座標と考えることができる．
+この表示は各列の数値が図\ref{fig:ed5}に示す2次元の編集グラフの座標と考えることができる．
+このグラフを編集グラフという．
 編集グラフは2つの文字列間において，取りうる限りの配置の2次元表現である有向非循環
 グラフ（DAG）である．
-全てのエッジが編集操作に対応していて，垂直の矢印は挿入を，水平の矢印は削除を，斜めの矢印一致を表している．
+全てのエッジが編集操作に対応していて，垂直の矢印は挿入を，水平の矢印は削除を，斜めの矢印は一致を表している．
 任意のアラインメントはこのグラフのパスで表現できる．
-例えば、図\ref{}の青と赤の矢印は，それぞれ図\ref{}および図\ref{}に示す2つの特定のアライメントに対応している．
+例えば、図\ref{fig:ed5}の青と赤の矢印は，それぞれ図\ref{fig:ed1}および図\ref{fig:ed3}に示す2つの特定のアライメントに対応している．
 
 2つの文字列間の編集距離は，動的計画法を用いて計算できる．
 動的計画法は小さな部分問題から始めて次第に大きな問題を漸進的に解決し，
@@ -78,10 +106,20 @@ DNAの塩基配列やタンパク質アミノ酸配列の研究は，
 スコアマトリックスの概念が導入される．
 この概念は効果的に編集グラフの各エッジの重みを定義する．
 アラインメントのメリットを決定することとはつまり，
-図\ref{}に示すスコアマトリクスにおいて一致の場合のスコアが最高値に割り当てられた場合のグラフの最長経路，
+図\ref{fig:scorematrix}に示すスコアマトリクスにおいて一致の場合のスコアが最高値に割り当てられた場合のグラフの最長経路，
 または一致の場合のスコアが最低値に割り当てられたの場合の最短経路と等しくなる．
 一般的に，不一致のペナルティは特定の文字のペアにも依存することに注意が必要で
 ある．
+\begin{figure}[t!]
+ 	\begin{center}
+\subfigure[最長経路探索のスコアマトリックス]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/2/maxscore_ex.eps}}
+\subfigure[最短経路探索のスコアマトリックス]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/2/minscore_ex.eps}}
+\caption{スコアマトリックス}
+\label{fig:scorematrix}
+\end{center}
+\end{figure}
 
 あるノードにおけるスコアの最大値と最小値を求めるスコア関数は
 式\ref{eq:maxscore}と式\ref{eq:minscore}のように書ける．
@@ -104,16 +142,26 @@ S_{i-1,j-1}+\delta(Q_{i},P_{j})
 \end{align}
 \label{eq:minmaxscore}
 \end{subequations}
-iとjは図\ref{}に示す行と列のインデックスである．
+iとjは図\ref{fig:ed5}に示す行と列のインデックスである．
 スコアマトリックスを適用した場合，式\ref{eq:maxscore}を使用すると
 整列問題を最長経路問題に変換でき，
 式\ref{eq:minscore}を使用すると，整列問題を最短経路問題に変換できる．
 
 \section{CMOSによるRace Logic実装}
 本節では，CMOSを用いたRace Logic実装例として，配列アラインメントアクセラレータを説明する．
-Race Logicの考えを用いて実装された配列アラインメントアーキテクチャの基本構造を図\ref{}に示す．
+Race Logicの考えを用いて実装された配列アラインメントアーキテクチャの基本構造を図\ref{fig:racelogicarray}に示す．
 このRace Logic Arrayはセルと呼ばれる単位のユニットが繰り返される構造をとっている．
-図\ref{}に示す編集グラフに対して，Race Logic Arrayが編集グラフ全体に，セルがノードに対応する．
+\begin{figure}[t!]
+ 	\begin{center}
+\subfigure[Race Logicを用いた配列アラインメントアクセラレータの構成]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/2/lightracelogic_1.png}}
+\subfigure[Race Logic Arrayの構成]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/2/lightracelogic_2.png}}
+\caption{配列アラインメントアクセラレータの基本構造}
+\label{fig:racelogicarray}
+\end{center}
+\end{figure}
+図\ref{fig:ed5}に示す編集グラフに対して，Race Logic Arrayが編集グラフ全体に，セルがノードに対応する．
 セルは上・斜上・左のセルから信号の入力を受け付ける．
 信号が入力された後，設定された条件に合わせて適切な処理をした後に，
 次のセルへと信号を出力する．
@@ -123,7 +171,7 @@ Race Logicの考えを用いて実装された配列アラインメントアー�
 
 \begin{itemize}
 \item CMOSによる同期型Race Logic実装\\
-CMOSで実装された同期型Race Logicのセルの構造を図\ref{}に示す．
+CMOSで実装された同期型Race Logicのセルの構造を図\ref{fig:CMOSsync}に示す．
 
 ブール値”1”の信号は左・斜上・上のセルのいずれからも入力される．
 入力された信号はORゲートを通過して、飽和アップカウンタにおいてNクロックサイクルに0をカウントする．この飽和アップカウンタをクロックと同期させる．
@@ -131,18 +179,18 @@ CMOSで実装された同期型Race Logicのセルの構造を図\ref{}に示す
 各着色ゲートの出力は，所望の重量に達した時点でトリガーする特定の重量を表しており，アルファベットの符号化を入力とするMUXから所望の重量を選択することができる．
 生成される出力信号がパルスではなく固定ブール値“1”であることを確実にするために，到着回路のセットが配置され，各計算の最後にリセットされている．
 
-図\ref{CMOSsync}のセルを繰り返した構造を持つアレイに信号が入力された時から出力信号を得るまでのクロック数をカウントするカウンタがアレイ外部に存在する．
+図\ref{fig:CMOSsync}のセルを繰り返した構造を持つアレイに信号が入力された時から出力信号を得るまでのクロック数をカウントするカウンタがアレイ外部に存在する．
 このカウンタが計測した値が最短経路をパスした時のクロック数となる．
-%\begin{figure}[t!]
-%\begin{center}
-%\includegraphics[keepaspectratio,scale=0.01]{fig/}
-%\caption{CMOSで実装された同期型Race Logicのセル構造}
-%\label{CMOSsync}
-%\end{center}
-%\end{figure}
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.2]{fig/2/CMOSsync.png}
+\caption{CMOSで実装された同期型Race Logicのセル構造}
+\label{fig:CMOSsync}
+\end{center}
+\end{figure}
 
 \item CMOSによる非同期型Race Logic実装\\
-CMOSで実装された非同期型Race Logicのセルの構造を図\ref{CMOSasync}に示す．
+CMOSで実装された非同期型Race Logicのセルの構造を図\ref{fig:CMOSasync}に示す．
 
 ブール値”1”の信号は左・斜上・上のセルのいずれからも入力される．
 入力された信号はORゲート，リセットのためのANDゲートを通過する．
@@ -152,15 +200,15 @@ ANDゲートを通過後に次のセルへの伝搬に向けて分けられ，�
 同期型と同様，アルファベットの符号化を入力とするMUXから所望の遅延を選択することができる．
 ダミーのパスゲートは，全ての遅延経路に亘って同様の遅延を保証するために斜下へのパス以外に追加されている．
 
-図\ref{}のセルを繰り返した構造を持つアレイに信号が入力された時から出力信号を得るまでの遅延時間をカウントするカウンタがアレイ外部に存在する．
+図\ref{fig:CMOSasync}のセルを繰り返した構造を持つアレイに信号が入力された時から出力信号を得るまでの遅延時間をカウントするカウンタがアレイ外部に存在する．
 このカウンタが計測した値が最短経路をパスした時の遅延時間となる．
-%\begin{figure}[t!]
-%\begin{center}
-%\includegraphics[keepaspectratio,scale=0.01]{fig/}
-%\caption{CMOSで実装された非同期型Race Logicのセル構造}
-%\label{CMOSasync}
-%\end{center}
-%\end{figure}
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.2]{fig/2/CMOSasync.png}
+\caption{CMOSで実装された非同期型Race Logicのセル構造}
+\label{fig:CMOSasync}
+\end{center}
+\end{figure}
 
 \end{itemize}
 
