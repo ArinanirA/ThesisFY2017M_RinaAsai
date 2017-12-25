@@ -14,8 +14,9 @@ Race Logicの計算は有効非巡回グラフ
 各経路において条件に合わせて重み付けを行い，出力時にその重みの総和を見る．
 その総和の最小値を見るか最大値を見るかが，最短・最長経路探索にそれぞれ対応している．
 
-重みに遅延時間を選択することによって，出力のタイミングのレースが計算結果を表す．
+重みに遅延時間を選択することによって，出力のタイミングが計算結果を表す．
 最短経路検索においては一番早く出力された信号を，最長経路検索においては一番遅く出力された信号を見る．
+つまり，出力のタイミングを競うレースに勝利した信号のみを見る，ということであり，Race Logicの名前の所以でもある．
 出力信号が持つ遅延時間情報が求められた有効な情報である．
 例えば，最短・最長経路探索では最短経路長や最長経路長などが求められる．
 
@@ -82,7 +83,7 @@ DNAの塩基配列やタンパク質アミノ酸配列の研究は，
 在する記号の数を示している．
 この表示は各列の数値が図\ref{fig:ed5}に示す2次元の編集グラフの座標と考えることができる．
 このグラフを編集グラフという．
-編集グラフは2つの文字列間において，取りうる限りの配置の2次元表現である有向非循環
+編集グラフは2つの文字列間において，取りうる限りの配置の2次元表現である有向非巡回
 グラフ（DAG）である．
 全てのエッジが編集操作に対応していて，垂直の矢印は挿入を，水平の矢印は削除を，斜めの矢印は一致を表している．
 任意のアラインメントはこのグラフのパスで表現できる．
@@ -184,7 +185,7 @@ CMOSで実装された同期型Race Logicのセルの構造を図\ref{fig:CMOSsy
 \begin{figure}[t!]
 \begin{center}
 \includegraphics[keepaspectratio,scale=0.2]{fig/2/CMOSsync.png}
-\caption{CMOSで実装された同期型Race Logicのセル構造}
+\caption{CMOSで実装された同期型Race Logicのセル構造\cite{madhavan2014race}}
 \label{fig:CMOSsync}
 \end{center}
 \end{figure}
@@ -205,7 +206,7 @@ ANDゲートを通過後に次のセルへの伝搬に向けて分けられ，�
 \begin{figure}[t!]
 \begin{center}
 \includegraphics[keepaspectratio,scale=0.2]{fig/2/CMOSasync.png}
-\caption{CMOSで実装された非同期型Race Logicのセル構造}
+\caption{CMOSで実装された非同期型Race Logicのセル構造\cite{madhavan20174}}
 \label{fig:CMOSasync}
 \end{center}
 \end{figure}
