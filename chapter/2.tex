@@ -28,7 +28,7 @@ Race Logicの計算は有効非巡回グラフ
 出力信号の遅延時間がとある情報を持つ計算結果となる．
 例えば図\ref{fig:DAG}の頂点Aに信号を入力し，頂点Hから出力され，一つの辺を信号が通過する際の遅延時間をとある固定値とする．
 ここでは簡単のためにその遅延時間を1と表す．
-頂点Aに信号を入力してから頂点Hに一番最初に出力される信号の遅延時間はである．
+頂点Aに信号を入力してから頂点Hに一番最初に出力される信号の遅延時間は3である．
 一辺の通過の際の遅延時間を1としたので，一番最初に出力された信号の遅延時間は頂点Aから頂点Hまでの距離を表している．
 このように出力信号の遅延時間はとある情報を持っており，
 どのような情報を持つかは応用するアプリケーションによって異なる．
@@ -47,10 +47,23 @@ DNAの塩基配列やタンパク質アミノ酸配列の研究は，
 配列情報解析の重要な対象であるゲノム塩基配列は，
 すでに200種類以上が決定されており，さらに多くの解析が進行中であるといわれている
 \cite{浅井潔2005バイオインフォマティクス}．
+
 生物配列の文字列処理の中で，DNA配列中に同じ順序で並んでいるユニットのパターンを見つける
 配列アラインメントがある\cite{須戸里織2011バイオインフォマティクスゲノム配列から
 機能解析へバイオインフォマティクスゲノム配列から機能解析へ}．
 アラインメントとは，複数の配列を入力として配列要素の間に最適な対応関係を求める処理である．
+配列アラインメントの中には，グローバル配列アラインメントとローカル配列アラインメントというものがある．
+グローバル配列アラインメントは，ある2つ以上の配列全体の間でのアラインメントを見つけることであり，
+ローカル配列アラインメントは，ある2つ以上の配列の一部分で最も一致度が高い部分でのアラインメントを見つけることである．
+配列Pと配列Qのグローバル配列アラインメントとローカル配列アラインメントを例として図\ref{fig:grlc}に示す．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.5]{fig/2/grlc.eps}
+\caption{グローバル配列アラインメントとローカル配列アラインメント}
+\label{fig:grlc}
+\end{center}
+\end{figure}
+
 配列アラインメントには，動的計画法による解法としてNeedleman-Wunschアルゴリズム\cite{needleman1970general}やSmith-Watermanアルゴリズム\cite{smith1981identification}が存在する．
 配列アラインメントは生物学において重要な手法であり，
 計算機を用いた処理の高速化は従来より多くの研究がなされてきた\cite{須戸里織2011gpu,宗川裕馬2008統合開発環境,sandes2011smith,liu2015accelerating,伊野文彦2007gpu}．
@@ -59,32 +72,32 @@ DNAの塩基配列やタンパク質アミノ酸配列の研究は，
 編集距離は，一方の文字列をもう一方の文字列に変形するのに必要な手順である一文字の挿入・削除・置換に
 それぞれ編集スコアを割り当て，そのスコアの和として定義される．
 編集距離の理解を助けるために，長さN = 5の文字列A= "TCGAT"と長さM = 5の文字列B= "GTCAC"を考える．
-\begin{figure}[ht!]
-    \begin{center}
-        \subfigure[]{
-        \includegraphics[keepaspectratio, scale=0.3]{fig/2/ed1.eps}
-        \label{fig:ed1}
-      }\\
-    \subfigure[]{
-        \includegraphics[keepaspectratio, scale=0.3]{fig/2/ed2.eps}
-        \label{fig:ed2}
-      }\\
-    \subfigure[]{
-        \includegraphics[keepaspectratio, scale=0.3]{fig/2/ed3.eps}
-        \label{fig:ed3}
-     }\\
-    \subfigure[]{
-        \includegraphics[keepaspectratio, scale=0.3]{fig/2/ed4.eps}
-        \label{fig:ed4}
-      }\\
-     \subfigure[]{
-        \includegraphics[keepaspectratio, scale=0.65]{fig/2/ed5.eps}
-        \label{fig:ed5}
-      }
-    \caption{編集距離と編集グラフ}
-    \label{fig:ed}
-    \end{center}
-  \end{figure}
+\begin{figure}[t!]
+\begin{center}
+\subfigure[]{
+\includegraphics[keepaspectratio, scale=0.25]{fig/2/ed1.eps}
+\label{fig:ed1}
+ }
+\subfigure[]{
+\includegraphics[keepaspectratio, scale=0.25]{fig/2/ed2.eps}
+\label{fig:ed2}
+ }\\
+\subfigure[]{
+\includegraphics[keepaspectratio, scale=0.25]{fig/2/ed3.eps}
+\label{fig:ed3}
+ }
+\subfigure[]{
+\includegraphics[keepaspectratio, scale=0.25]{fig/2/ed4.eps}
+\label{fig:ed4}
+ }\\
+\subfigure[]{
+\includegraphics[keepaspectratio, scale=0.5]{fig/2/ed5.eps}
+\label{fig:ed5}
+ }
+\caption{編集距離と編集グラフ}
+\label{fig:ed}
+\end{center}
+\end{figure}
 図\ref{fig:ed1}と図\ref{fig:ed3}は，文字列AをBに変換する2つの方法を示している．
 上の行のスペースは挿入を表し，下の行のスペースは削除を表す．
 両方の行に同じ文字がある列は一致，異なる文字がある列は不一致と呼ぶ．
@@ -125,7 +138,7 @@ DNAの塩基配列やタンパク質アミノ酸配列の研究は，
 一般的に，不一致のペナルティは特定の文字のペアにも依存することに注意が必要で
 ある．
 \begin{figure}[t!]
- 	\begin{center}
+\begin{center}
 \subfigure[最長経路探索のスコアマトリックス]{
 \includegraphics[keepaspectratio,scale=0.4]{fig/2/maxscore_ex.eps}}
 \subfigure[最短経路探索のスコアマトリックス]{
@@ -166,11 +179,11 @@ iとjは図\ref{fig:ed5}に示す行と列のインデックスである．
 Race Logicの考えを用いて実装された配列アラインメントアーキテクチャの基本構造を図\ref{fig:racelogicarray}に示す．
 このRace Logic Arrayはセルと呼ばれる単位のユニットが繰り返される構造をとっている．
 \begin{figure}[t!]
- 	\begin{center}
+\begin{center}
 \subfigure[Race Logicを用いた配列アラインメントアクセラレータの構成]{
-\includegraphics[keepaspectratio,scale=0.4]{fig/2/lightracelogic_1.png}}
+\includegraphics[keepaspectratio,scale=0.3]{fig/2/lightracelogic_1.png}}
 \subfigure[Race Logic Arrayの構成]{
-\includegraphics[keepaspectratio,scale=0.4]{fig/2/lightracelogic_2.png}}
+\includegraphics[keepaspectratio,scale=0.3]{fig/2/lightracelogic_2.png}}
 \caption{配列アラインメントアクセラレータの基本構造}
 \label{fig:racelogicarray}
 \end{center}
@@ -186,6 +199,13 @@ Race Logicの考えを用いて実装された配列アラインメントアー�
 \begin{itemize}
 \item CMOSによる同期型Race Logic実装\\
 CMOSで実装された同期型Race Logicのセルの構造を図\ref{fig:CMOSsync}に示す．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.2]{fig/2/CMOSsync.png}
+\caption{CMOSで実装された同期型Race Logicのセル構造\cite{madhavan2014race}}
+\label{fig:CMOSsync}
+\end{center}
+\end{figure}
 
 ブール値”1”の信号は左・斜上・上のセルのいずれからも入力される．
 入力された信号はORゲートを通過して、飽和アップカウンタにおいてNクロックサイクルに0をカウントする．この飽和アップカウンタをクロックと同期させる．
@@ -195,16 +215,16 @@ CMOSで実装された同期型Race Logicのセルの構造を図\ref{fig:CMOSsy
 
 図\ref{fig:CMOSsync}のセルを繰り返した構造を持つアレイに信号が入力された時から出力信号を得るまでのクロック数をカウントするカウンタがアレイ外部に存在する．
 このカウンタが計測した値が最短経路をパスした時のクロック数となる．
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[keepaspectratio,scale=0.2]{fig/2/CMOSsync.png}
-\caption{CMOSで実装された同期型Race Logicのセル構造\cite{madhavan2014race}}
-\label{fig:CMOSsync}
-\end{center}
-\end{figure}
 
 \item CMOSによる非同期型Race Logic実装\\
 CMOSで実装された非同期型Race Logicのセルの構造を図\ref{fig:CMOSasync}に示す．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.2]{fig/2/CMOSasync.png}
+\caption{CMOSで実装された非同期型Race Logicのセル構造\cite{madhavan20174}}
+\label{fig:CMOSasync}
+\end{center}
+\end{figure}
 
 ブール値”1”の信号は左・斜上・上のセルのいずれからも入力される．
 入力された信号はORゲート，リセットのためのANDゲートを通過する．
@@ -215,15 +235,6 @@ ANDゲートを通過後に次のセルへの伝搬に向けて分けられ，�
 ダミーのパスゲートは，全ての遅延経路に亘って同様の遅延を保証するために斜下へのパス以外に追加されている．
 
 図\ref{fig:CMOSasync}のセルを繰り返した構造を持つアレイに信号が入力された時から出力信号を得るまでの遅延時間をカウントするカウンタがアレイ外部に存在する．
-このカウンタが計測した値が最短経路をパスした時の遅延時間となる．
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[keepaspectratio,scale=0.2]{fig/2/CMOSasync.png}
-\caption{CMOSで実装された非同期型Race Logicのセル構造\cite{madhavan20174}}
-\label{fig:CMOSasync}
-\end{center}
-\end{figure}
-
 \end{itemize}
 
 \section{解決すべき課題}
