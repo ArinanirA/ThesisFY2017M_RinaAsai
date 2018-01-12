@@ -130,8 +130,27 @@ DNAの塩基配列やタンパク質アミノ酸配列の研究は，
 
 任意の2つの文字列が与えられた場合，多数の異なるパスとアラインメントマトリックスがあり，それぞれが独自のアラインメントを持つ．
 ある特定のアライメントの相対的なメリットを決定するために
-スコアマトリックスの概念が導入される．
-この概念は効果的に編集グラフの各エッジの重みを定義する．
+スコアマトリックスが導入される．
+このスコアマトリックスは効果的に編集グラフの各エッジの重みを定義する．
+スコアマトリックスはあるユニット間の一致不一致や置換確率から求められる
+スコアからなる行列である．
+一致・不一致スコアと対数オッズスコアの式を式\ref{eq:mchun}と式\ref{eq:odds}にそれぞれ示す．
+\begin{equation}
+S(A,B)= \left \{
+\begin{array}{l}
+\alpha \ \ A = B\\
+\beta \ \ A \neq B
+\end{array}
+\right.
+\label{eq:mchun}
+\end{equation}
+\begin{equation}
+S(A,B)= \log \cfrac{q(A,B)}{p(A)p(B)}
+\label{eq:odds}
+\end{equation}
+$ここでq(A,B)は進化上の関係からAとBの対応が生じた確率，
+p(A)は偶然にAが生じた確率，p(A)P(B)は偶然にAとBの対応が生じた確率である．$
+図\ref{fig:scorematrix}には式\ref{eq:mchun}に具体的な数値を当てはめた場合のスコアマトリックス例を示す．
 アラインメントのメリットを決定することとはつまり，
 図\ref{fig:scorematrix}に示すスコアマトリクスにおいて一致の場合のスコアが最高値に割り当てられた場合のグラフの最長経路，
 または一致の場合のスコアが最低値に割り当てられたの場合の最短経路と等しくなる．
@@ -143,12 +162,12 @@ DNAの塩基配列やタンパク質アミノ酸配列の研究は，
 \includegraphics[keepaspectratio,scale=0.4]{fig/2/maxscore_ex.eps}}
 \subfigure[最短経路探索のスコアマトリックス]{
 \includegraphics[keepaspectratio,scale=0.4]{fig/2/minscore_ex.eps}}
-\caption{スコアマトリックス}
+\caption{スコアマトリックスの例}
 \label{fig:scorematrix}
 \end{center}
 \end{figure}
 
-あるノードにおけるスコアの最大値と最小値を求めるスコア関数は
+あるノードにおけるスコアの最大値と最小値を求める関数は
 式\ref{eq:maxscore}と式\ref{eq:minscore}のように書ける．
 \begin{subequations}
 \begin{align}
