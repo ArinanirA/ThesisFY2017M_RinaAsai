@@ -23,6 +23,7 @@
 光デバイスは光信号の広帯域性や，波長多重，位相多重と言った多重性を利用して，
 伝搬信号自体の情報量を増加させることで，データ転送速度を向上させることが可能である．
 \end{itemize}
+
 電気デバイスはデバイスの小型化が可能という特徴から集積度を上げることが可能である．
 それに比べ，現状では光デバイスはデバイスの小型化に向いておらず，集積度を上げることが困難であった．
 よって演算には電気デバイスが用いられてきた．
@@ -49,10 +50,10 @@
 
 \subsubsection{光スイッチ}
 光スイッチとは，光伝搬信号を通過させるか否かでオン動作およびオフ動作をする光デバイスである．
-光スイッチの性能指標として，よく用いられるのが漏れ率および透過率，消光比，OMA(Optical Modulation Amplitude)の3つである．
+光スイッチの性能指標として，よく用いられるのが漏れ率および透過率，消光比である．
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[keepaspectratio,scale=0.4]{fig/3/swichout.pdf}
+\includegraphics[keepaspectratio,scale=0.25]{fig/3/swichout.pdf}
 \caption{光スイッチの光入力信号強度と光出力信号強度}
 \label{fig:swichout}
 \end{center}
@@ -100,7 +101,8 @@ OMA = P_{in}(1- \alpha - \beta)[W]
 \end{comment}
 \end{itemize}
 %式~\eqref{eq:syoukouhi}および式~\eqref{eq:oma}から，
-%消光比とOMAは，透過率および漏れ率を用いて議論することが可能であるとわかる．
+
+消光比は，透過率および漏れ率を用いて議論することが可能であるとわかる．
 よって本論文では透過率，漏れ率に着目し，これらをスイッチ性能として議論する．
 
 \subsubsection{受光器}
@@ -146,6 +148,7 @@ Eは光子のエネルギー，hはプランク定数，$\nu$は光の周波数�
 \end{center}
 \end{figure}
 受光器であるフォトダイオードはこの吸収の現象を利用して光を検出する．
+
 フォトダイオードはp型半導体と真性半導体とn型半導体を接合したpin接合という構造を持ち，
 空乏層で発生した電子や正孔が移動することで電流が流れる．
 この電流のことを光電流と呼ぶ．
@@ -158,6 +161,7 @@ Eは光子のエネルギー，hはプランク定数，$\nu$は光の周波数�
 \label{fig:photo}
 \end{center}
 \end{figure}
+
 受光器の性能は受光感度として表される．
 受光感度は，光入力信号強度を[W]，光電流を[A]で表した場合，
 両者の比で表される．
@@ -170,7 +174,20 @@ Eは光子のエネルギー，hはプランク定数，$\nu$は光の周波数�
 もう一つ重要な性能指標が受光器の最小受光感度である．最小受光感度とは，受光器が検出可能な最小の信号強度のことである．
 
 \subsubsection{光カプラ}
+光カプラとは，1つの入力端子に入射した光伝搬信号を複数の出力端子に出射する分岐・分配機能と
+複数の入力端子に入射した光伝搬信号を1つの出力端子に出射する結合機能を持つデバイスである．
+光分岐結合器，光分岐挿入器とも呼ばれる．
+光カプラの分類を図\ref{}に示す．
+4端子で2入力2出力または3入力1出力のものが光方向性結合器，
+1入力N出力のものが光分配器もしくは光分岐器，
+N入力1出力のものが光結合器，
+N入力M出力のものが光スターカプラと呼ばれている．
+光結合器の多くが入出力端子を逆にすることで光分配器としても使うことができる\cite{ハンドブック}．
+また，光の結合・分配の際には損失が発生する．
+
 \subsubsection{光遅延素子}
+光遅延素子は光伝搬信号に伝搬遅延を付加できる素子のことを指す．
+その実現は様々な方法があり，いずれの方法を用いても遅延を付加する際には損失が発生する．
 
 \subsection{ナノフォトニクスの性質}
 ナノフォトニクスとは，ナノ加工技術をベースとして，近接場光の性質を活かした技術である．
@@ -192,7 +209,7 @@ Eは光子のエネルギー，hはプランク定数，$\nu$は光の周波数�
 \end{figure}
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[keepaspectratio,scale=0.5]{fig/3/evanesent2.pdf}
+\includegraphics[keepaspectratio,scale=0.4]{fig/3/evanesent2.pdf}
 \caption{エバネッセント光}
 \label{fig:eva2}
 \end{center}
@@ -204,9 +221,17 @@ Eは光子のエネルギー，hはプランク定数，$\nu$は光の周波数�
 これを$ \mu m$のスケールにするためには，半導体などのナノ加工技術がベースとしてある．
 半導体のナノ加工技術が素子の加工技術のベースになり，近接場光の局在性をはじめとする近接場光にしかない特徴を活かして，
 光信号をナノレベルで制御することが可能になって成り立つ技術がナノフォトニクスである．
+
 \section{提案回路}
 ナノフォトニック・デバイスを用いたRace logic（以下，光Race Logic）回路のセル構造を考えていく．
-図\ref{ }に光Race Logic回路のセルの概要を示す．
+図\ref{fig:lightracelogiccell}に光Race Logic回路のセルの概要を示す．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.5]{fig/3/lightracelogic_cell_1.png}
+\caption{光Race logic回路におけるセルの概要}
+\label{fig:lightracelogiccell}
+\end{center}
+\end{figure}
 
 セルは大きく分けて４つのユニットに分けて考えることができる．
 まずは入力ユニットで，これは左・斜上・上のセルからの入力経路を持つ．
@@ -219,11 +244,25 @@ Eは光子のエネルギー，hはプランク定数，$\nu$は光の周波数�
 対象とするアプリケーションや設定する競争条件によって，光Race Logic回路の構成は詳細に決定する．
 
 今回はDNAのグローバル配列アラインメントスコア計算を対象とした非同期型光Race Logic回路を提案する．
-計算に用いるスコアマトリクスは式\ref{}を用いて求めた．
-そのスコアマトリクスを図\ref{}に示す．
+計算に用いるスコアマトリクスは式\ref{eq:mchun}を用いて求めた．
+そのスコアマトリクスを図\ref{fig:scorematrix_3}に示す．
 最下行と最右列はギャップスコアを表している．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.3]{fig/3/scorematrix.eps}
+\caption{使用するスコアマトリクス}
+\label{fig:scorematrix_3}
+\end{center}
+\end{figure}
 
-図\ref{}に提案する回路のセル構造を示す．
+図\ref{fig:proposalcell}に提案する回路のセル構造を示す．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.5]{fig/3/lightracelogic_cell_5.png}
+\caption{提案回路のセル構造}
+\label{fig:proposalcell}
+\end{center}
+\end{figure}
 提案回路において，合波ユニットでは光カプラを用いて合波のみが行われる．
 メインユニットでは右．下，斜め下への伝搬経路ごとにスコアマトリクスに基づいての重み付けがされている．
 右，下への伝搬経路ではギャップスコアに基づく遅延が発生するように，光遅延素子を設定する．
