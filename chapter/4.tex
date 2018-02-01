@@ -29,10 +29,10 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 \begin{figure}[t!]
 \begin{center}
 \subfigure[光Race Logic arrayへの光伝搬入力信号強度]{
-\includegraphics[keepaspectratio,scale=0.5]{fig/4/test_in.png}
-\label{fig:test_in}}
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/test_in.png}
+\label{fig:test_in}}\\
 \subfigure[光Race Logic arrayへの光伝搬出力信号強度]{
-\includegraphics[keepaspectratio,scale=0.5]{fig/4/test_out.png}
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/test_out.png}
 \label{test_out}}
 \caption{Optisystemによる機能検証結果}
 \label{fig:test}
@@ -46,11 +46,49 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 
 図\ref{fig:test_swich}のそれぞれの状態において，
 出力から最初に観測される信号のタイミングは
-入力からns後，ns後，ns後になると想定している．
-図\ref{fig:test}のnsnsの区間は図\ref{fig:test_swich_a}の状態，
-nsnsの区間は図\ref{fig:test_swich_b}の状態，
-nsnsの区間は図\ref{fig:test_swich_c}の状態である．
-図\ref{fig:test}を見ると，想定した動作をしているのが確認できる．
+入力から2ns後，3ns後，4ns後になると想定している．
+図\ref{fig:test}の0ns〜8nsの区間は図\ref{fig:test_swich_a}の状態，
+8ns〜14nsの区間は図\ref{fig:test_swich_b}の状態，
+14ns〜20nsの区間は図\ref{fig:test_swich_c}の状態である．
+図\ref{fig:test}を見ると，想定した動作をしているのが確認できた．
 
 \section{評価}
+本節では，提案した光Race Logic arrayの遅延時間，面積及び
+一つのアラインメントを求める（以後，これを一計算と呼称する）毎のエネルギーが
+配列長Nによってどう変化するかを見積るために
+各項目を算出するモデルを構築し，評価を行う．
+\subsection{遅延時間}
+\begin{eqnarray}
+T &=& T_{switching}+2NT_{cell-pass}+T_{pd} \nonumber \\
+T_{cell-pass} &=& T_{coupler}+T_{amp}+T_{splitter}+T_{switch-pass}
+\label{eq:latency}
+\end{eqnarray}
+
+\subsection{面積}
+\begin{eqnarray}
+A &=& N^2 A_{cell}+2N(A_{delay}+A_{amp}) \nonumber \\
+A_{cell} &=& A_{coupler}+A_{amp}+A_{splitter}+A_{switch}+2A_{delay}
+\label{eq:Area}
+\end{eqnarray}
+
+\subsection{ー計算毎のエネルギー}
+\begin{equation}
+E=P*T
+\label{eq:Energy}
+\end{equation}
+
+\begin{equation}
+P=P_{ls}+P_{amp}+P_{v}
+\label{eq:power}
+\end{equation}
+
+\begin{equation}
+P_{out_NN}=Loss_{NN}(P_{out_(N-1)(N-1)}+P_{out_(N-1)N}+P_{out_N(N-1)})
+\label{eq:power_out}
+\end{equation}
+$N \geq 0,P_{out_-1,-1}=P_{in},P_{out_-1,0}=0,P_{out_0,-1}=0$
+
+$minP_{out_NN} \geq P_{r}となるようにP_{ls}+P_{amp}$の値を決定することが必要となる．
+
+\subsubsection{ケーススタディ：配列長N=2における一計算毎のエネルギー}
 
