@@ -14,13 +14,13 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 \begin{figure}[t!]
 \begin{center}
 \subfigure[配列が完全一致のスイッチ状態]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/test_swich_a.eps}
+\includegraphics[keepaspectratio,scale=0.5]{fig/4/test_swich_a.eps}
 \label{fig:test_swich_a}}
 \subfigure[配列が一部一致の場合のスイッチ状態]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/test_swich_b.eps}
+\includegraphics[keepaspectratio,scale=0.5]{fig/4/test_swich_b.eps}
 \label{fig:test_swich_b}}
 \subfigure[配列が完全不一致の場合のスイッチ状態]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/test_swich_c.eps}
+\includegraphics[keepaspectratio,scale=0.5]{fig/4/test_swich_c.eps}
 \label{fig:test_swich_c}}
 \caption{配列長N=2における光Race Logic arrayのスイッチ状態}
 \label{fig:test_swich}
@@ -29,10 +29,10 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 \begin{figure}[t!]
 \begin{center}
 \subfigure[光Race Logic arrayへの光伝搬入力信号強度]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/test_in.png}
+\includegraphics[keepaspectratio,scale=0.37]{fig/4/test_in.png}
 \label{fig:test_in}}\\
 \subfigure[光Race Logic arrayへの光伝搬出力信号強度]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/test_out.png}
+\includegraphics[keepaspectratio,scale=0.37]{fig/4/test_out.png}
 \label{test_out}}
 \caption{Optisystemによる機能検証結果}
 \label{fig:test}
@@ -55,14 +55,11 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 \section{評価}
 本節では，提案した光Race Logic arrayが
 一組の配列のアラインメントを求める（以後，これを一計算と呼称する）ために必要な
-遅延時間が配列長Nによってどう変化するかを見積るためにモデルを構築し，評価を行う．
-\begin{comment}
-本節では，提案した光Race Logic arrayの遅延時間，面積及び
-一つのアラインメントを求める（以後，これを一計算と呼称する）毎のエネルギーが
+遅延時間や面積及び消費電力が
 配列長Nによってどう変化するかを見積るために
-各項目を算出するモデルを構築し，評価を行う．
-\end{comment}
+各項目を算出するモデル式を構築し，評価を行う．
 
+\subsection{遅延時間}
 光Race logic arrayに光伝搬信号が入射されてからarray内を伝搬し，
 最初に出力された信号が受光器で検出されるまでの遅延時間を考える．
 配列長Nの光Race logic arrayにおいて，最初に光伝搬信号が出力されるまでの回路遅延時間は
@@ -84,6 +81,8 @@ $T_{coupler}・T_{splitter}がそれぞれ光結合器・光分配器の遅延�
 $T_{amp}がアンプの遅延時間，T_{switch-pass}が光スイッチ遅延時間である．$
 $T_{wire}とT_{cell-pass}が光伝搬入力信号が$光Race Logic array$を伝搬するために必要な時間，$
 $T_{pd}が受光器が光出力信号を検出するまでに必要な時間である．$
+式\ref{eq:latency}に示す通り，遅延時間は
+配列長Nに線形にスケーリングする．
 
 光伝搬信号は光デバイス内部を光速で通過するため，光デバイス内の遅延時間は素子のゲート長に依存する．
 今回は，ナノフォトニック・デバイスのゲート長が100，10，1$\mu m$の場合の
@@ -103,13 +102,12 @@ $T_{pd}が受光器が光出力信号を検出するまでに必要な時間で�
 ナノフォトニック・デバイスのゲート長が100$\mu m$，
 配列長N=64の場合においても，光Race Logic arrayでの
 一計算あたりの遅延時間は1.906$ns$である．
-
 同じスコアマトリクス（図\ref{fig:scorematrix_3}）をもって計算を行う
 CMOSを用いたRace Logic配列アラインメントスコア計算回路において，
 AMIS0.5μm プロセスを使用し，OSUスタンダードセルと
 AMIS スタンダードセルを持って実装された回路それぞれの
 シミュレーション結果が報告されている\cite {madhavan20174}．
-その結果と比較する（表\ref{latency_64}と，配線遅延がないこと及び
+その結果と比較する（表\ref{latency_64}）と，配線遅延がないこと及び
 コントロールやカウンター部分での遅延を考慮していないことを考慮しても，
 遅延時間は小さくなると見積れる．
 
@@ -126,7 +124,6 @@ AMISスタンダードセル&213.33&\cite{madhavan2014race}\\ \hline
 \end{center}
 \end{table}
 
-\begin{comment}
 \subsection{面積}
 提案したセルの構成（図\ref{fig:proposalcell}）より，
 セル一つの面積$A_{cell}$を表すモデル式は式\ref{eq:cellArea}と書ける．
@@ -150,7 +147,22 @@ A = A_{wire}+N^2 \times A_{cell} + 2N \times (A_{delay}+A_{amp}) +A{ls}+A_{pd}
 \end{equation}
 
 $A_{wire}はセル間の配線面積，A{ls}は光源の面積，A_{pd}は受光器の面積である．$
+式\ref{eq:Area}が示すように，面積は
+配列長Nの２乗にスケーリングする．
 
+ナノフォトニック・デバイスのゲート長が100，10，1$\mu m$の場合の
+光Race Logic arrayの面積を示す．
+なお，配線面積に関しては今回は無視している．
+図\ref{fig:nanoArea}の縦軸は光Race Logic arrayの面積，横軸は配列長Nである．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.5]{fig/4/nanoArea.png}
+\caption{光Race Logic arrayの面積}
+\label{fig:nanoArea}
+\end{center}
+\end{figure}
+
+\begin{comment}
 \subsection{ー計算毎のエネルギー}
 一計算毎のエネルギー$E$は式\ref{eq:Energy}によって求めることができる．
 \begin{equation}
@@ -161,7 +173,9 @@ E=P*T+N^2 \times E_{v}
 $P$は光Race Logic arrayの消費電力，
 $T$は式\ref{eq:latency}で求めた一計算にかかる遅延時間，
 $E_{v}は光スイッチの駆動に必要なエネルギーである．$
+\end{comment}
 
+\subsection{消費電力}
 ここで本提案の光Race Logic arrayでの消費電力について考える．
 この回路での消費電力は，式\ref{eq:power}に示すように
 $光源の消費電力P_{ls}・アンプP_{amp}$の消費電力の二つのみで考えることができる．
@@ -187,6 +201,4 @@ $P_{out\,NN}$の値は配列の組み合わせ，即ちスイッチの状態に�
 よって，$P_{out\,NN}の最小値 \geq P_{r}となるようにP$の値を決定することが必要となる．
 
 \subsubsection{ケーススタディ：配列長N=2における一計算毎のエネルギー}
-\end{comment}
 
-\section{考察}
