@@ -53,12 +53,17 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 図\ref{fig:test}を見ると，想定した動作をしているのが確認できた．
 
 \section{評価}
+本節では，提案した光Race Logic arrayが
+一組の配列のアラインメントを求める（以後，これを一計算と呼称する）ために必要な
+遅延時間が配列長Nによってどう変化するかを見積るためにモデルを構築し，評価を行う．
+\begin{comment}
 本節では，提案した光Race Logic arrayの遅延時間，面積及び
 一つのアラインメントを求める（以後，これを一計算と呼称する）毎のエネルギーが
 配列長Nによってどう変化するかを見積るために
 各項目を算出するモデルを構築し，評価を行う．
-\subsection{遅延時間}
-まず，光Race logic arrayに光伝搬信号が入射されてからarray内を伝搬し，
+\end{comment}
+
+光Race logic arrayに光伝搬信号が入射されてからarray内を伝搬し，
 最初に出力された信号が受光器で検出されるまでの遅延時間を考える．
 配列長Nの光Race logic arrayにおいて，最初に光伝搬信号が出力されるまでの回路遅延時間は
 配列の組み合わせによって異なる．
@@ -80,6 +85,48 @@ $T_{amp}がアンプの遅延時間，T_{switch-pass}が光スイッチ遅延時
 $T_{wire}とT_{cell-pass}が光伝搬入力信号が$光Race Logic array$を伝搬するために必要な時間，$
 $T_{pd}が受光器が光出力信号を検出するまでに必要な時間である．$
 
+光伝搬信号は光デバイス内部を光速で通過するため，光デバイス内の遅延時間は素子のゲート長に依存する．
+今回は，ナノフォトニック・デバイスのゲート長が100，10，1$\mu m$の場合の
+光Race Logic arrayの遅延時間を示す．
+なお，配線遅延に関しては今回は無視している．
+図\ref{fig:nanolatency}の縦軸は遅延時間，横軸は配列長Nである．
+図\ref{fig:nanolatency}より，ナノフォトニック・デバイスのゲート長が小さいほど
+遅延時間が小さくなることが読み取れる．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.5]{fig/4/nanolatency.png}
+\caption{光Race Logic arrayの遅延時間}
+\label{fig:nanolatency}
+\end{center}
+\end{figure}
+
+ナノフォトニック・デバイスのゲート長が100$\mu m$，
+配列長N=64の場合においても，光Race Logic arrayでの
+一計算あたりの遅延時間は1.906$ns$である．
+
+同じスコアマトリクス（図\ref{fig:scorematrix_3}）をもって計算を行う
+CMOSを用いたRace Logic配列アラインメントスコア計算回路において，
+AMIS0.5μm プロセスを使用し，OSUスタンダードセルと
+AMIS スタンダードセルを持って実装された回路それぞれの
+シミュレーション結果が報告されている\cite {madhavan20174}．
+その結果と比較する（表\ref{latency_64}と，配線遅延がないこと及び
+コントロールやカウンター部分での遅延を考慮していないことを考慮しても，
+遅延時間は小さくなると見積れる．
+
+\begin{table}[t!]
+\begin{center}
+\caption{配列長N=64の場合の遅延時間}
+\begin{tabular}{|c|c|c|} \hline
+デバイス&遅延時間（$ns$）&参照\\ \hline \hline
+ナノフォトニック・デバイス&1.906&-\\ \hline
+OSUスタンダードセル&160&\cite{madhavan2014race}\\ \hline
+AMISスタンダードセル&213.33&\cite{madhavan2014race}\\ \hline
+\end{tabular}
+\label{latency_64}
+\end{center}
+\end{table}
+
+\begin{comment}
 \subsection{面積}
 提案したセルの構成（図\ref{fig:proposalcell}）より，
 セル一つの面積$A_{cell}$を表すモデル式は式\ref{eq:cellArea}と書ける．
@@ -140,4 +187,6 @@ $P_{out\,NN}$の値は配列の組み合わせ，即ちスイッチの状態に�
 よって，$P_{out\,NN}の最小値 \geq P_{r}となるようにP$の値を決定することが必要となる．
 
 \subsubsection{ケーススタディ：配列長N=2における一計算毎のエネルギー}
+\end{comment}
 
+\section{考察}
