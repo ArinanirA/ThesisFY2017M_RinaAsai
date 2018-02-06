@@ -33,7 +33,7 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 \label{fig:test_in}}\\
 \subfigure[光Race Logic arrayへの光伝搬出力信号強度]{
 \includegraphics[keepaspectratio,scale=0.37]{fig/4/test_out.png}
-\label{test_out}}
+\label{fig:test_out}}
 \caption{Optisystemによる機能検証結果}
 \label{fig:test}
 \end{center}
@@ -99,6 +99,7 @@ $T_{pd}が受光器が光出力信号を検出するまでに必要な時間で�
 \end{center}
 \end{figure}
 
+\begin{comment}
 ナノフォトニック・デバイスのゲート長が100$\mu m$，
 配列長N=64の場合においても，光Race Logic arrayでの
 一計算あたりの遅延時間は1.906$ns$である．
@@ -123,6 +124,7 @@ AMISスタンダードセル&213.33&\cite{madhavan2014race}\\ \hline
 \label{latency_64}
 \end{center}
 \end{table}
+\end{comment}
 
 \subsection{面積}
 提案したセルの構成（図\ref{fig:proposalcell}）より，
@@ -186,7 +188,7 @@ $E_{v}は光スイッチの駆動に必要なエネルギーである．$
 \subsection{消費電力}
 ここで本提案の光Race Logic arrayでの消費電力について考える．
 この回路での消費電力は，式\ref{eq:power}に示すように
-$光源の消費電力P_{ls}・アンプP_{amp}$の消費電力の二つのみで考えることができる．
+$光源の消費電力P_{ls}$，$アンプP_{amp}$の消費電力の二つのみで考えることができる．
 \begin{equation}
 P=P_{ls}+P_{amp}
 \label{eq:power}
@@ -195,18 +197,118 @@ P=P_{ls}+P_{amp}
 $P$の値は，光Race Logic arrayが機能を担保できる値に設定しなければならない．
 そこで，光Race Logic arrayの機能担保について具体的に見ていく．
 
-配列長Nの光Race Logic arrayからの光伝搬出力信号強度$P_{out\,N,N}$は
+配列長Nの光Race Logic arrayのN行N列目のセルからの
+光伝搬出力信号強度$P_{out\,N,N}$は
 式\ref{eq:power_out}と表せる．
 \begin{equation}
-P_{out\,N,N}=Loss_{NN}(P_{out\,(N-1),(N-1)}+P_{out\,(N-1),N}+P_{out\,N(N-1)})
+P_{out\,N,N}=Loss_{N,N}(P_{out\,(N-1),(N-1)}+P_{out\,(N-1),N}+P_{out\,N,(N-1)})
 \label{eq:power_out}
 \end{equation}
 
 $N \geq 0,P_{out\,-1,-1}=P_{ls},P_{out\,-1,0}=0,P_{out\,0,-1}=0である．$
+$Loss_{N,N}$はN行N列目のセルに光伝搬信号が入力されてから出力される際のロスである．
 
-$P_{out\,NN}$の値は配列の組み合わせ，即ちスイッチの状態によって大きく変化する．
+$P_{out\,N,N}$の値は配列の組み合わせ，即ちスイッチの状態によって大きく変化する．
 光Race Logic arrayからの光伝搬出力信号は受光器で検出されなければならない．
-よって，$P_{out\,NN}の最小値 \geq P_{r}となるようにP$の値を決定することが必要となる．
+受光器の最小受光感度$P_{r}$を用いると，
+$P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定することが必要となる．
 
-\subsubsection{ケーススタディ：配列長N=2における消費電力}
+\subsubsection{ケーススタディ：配列長N=2の光Race logic arrayにおける消費電力}
+ここで，図\ref{fig:loss}に示すように各素子における損失が一律で$\alpha$の場合において，
+配列長N=2の光Race logic arrayにおける消費電力を考える．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.5]{fig/4/loss.eps}
+\caption{光素子における損失例}
+\label{fig:loss}
+\end{center}
+\end{figure}
+この$\alpha$は0〜1の範囲の値を取る．
+図\ref{fig:proposalcell}に示すセルにおいて，光信号を伝搬させる際に損失を与える素子は
+光結合器，光分配器，光スイッチ，光遅延素子とする．
+この4つの素子での損失を$\alpha$とし，その他の損失は考えない．
+今回は回路規模が小さいので，各セルのアンプユニットでの
+光伝搬信号強度の増幅は行わず，
+光源の光出力信号強度を変えることによって$P_{out\,N,N}の最小値 \geq P_{r}となるように$する．
+この光Race logic arrayの消費電力$PはP=P_{ls}$となる．
 
+\begin{figure}[t!]
+\begin{center}
+\subfigure[状態1]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case1.eps}
+\label{fig:all_switch_1}}
+\subfigure[状態2]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case2.eps}
+\label{fig:all_switch_2}}
+\subfigure[状態3]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case3.eps}
+\label{fig:all_switch_3}}\\
+\subfigure[状態4]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case4.eps}
+\label{fig:all_switch_4}}
+\subfigure[状態5]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case5.eps}
+\label{fig:all_switch_5}}
+\subfigure[状態6]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case6.eps}
+\label{fig:all_switch_6}}\\
+\subfigure[状態7]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case7.eps}
+\label{fig:all_switch_7}}
+\subfigure[状態8]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case8.eps}
+\label{fig:all_switch_8}}
+\subfigure[状態9]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case9.eps}
+\label{fig:all_switch_9}}\\
+\subfigure[状態10]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case10.eps}
+\label{fig:all_switch_10}}
+\subfigure[状態11]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case11.eps}
+\label{fig:all_switch_11}}
+\subfigure[状態12]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case12.eps}
+\label{fig:all_switch_12}}\\
+\caption{取りうる全スイッチの状態}
+\label{fig:all_switch}
+\end{center}
+\end{figure}
+配列長N=2の光Race logic arrayの光スイッチは，配列の組み合わせによってその状態を変え，
+図\ref{fig:all_switch}に示す12通りのいずれかの状態を取る．
+図\ref{fig:all_switch}中のスイッチは，白塗りがONの状態を，
+黒塗りがOFFの状態をそれぞれ表している．
+図\ref{fig:all_switch_1}〜図\ref{fig:all_switch_2}は配列が完全に一致する場合，
+図\ref{fig:all_switch_3}〜図\ref{fig:all_switch_11}は配列中１文字がする場合，
+図\ref{fig:all_switch_12}は配列が完全に不一致の場合である．
+各状態での出力を以下に示す．
+\begin{itemize}
+\item 状態1（図\ref{fig:all_switch_1}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^6}{3^2}$\\
+\item 状態2（図\ref{fig:all_switch_2}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^6}{3^2}$\\
+\item 状態3（図\ref{fig:all_switch_3}）の出力　$P_{out\,2,2}=P_{ls}\frac{2(1-\alpha)^7}{3^2}$\\
+\item 状態4（図\ref{fig:all_switch_4}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7\bigl\{2(1-\alpha)+1\bigl\}}{3^2}$\\
+\item 状態5（図\ref{fig:all_switch_5}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)+1\bigl\}}{3^2}$\\
+\item 状態6（図\ref{fig:all_switch_6}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7\bigl\{2(1-\alpha)+1\bigl\}}{3^2}$\\
+\item 状態7（図\ref{fig:all_switch_7}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)+1\bigl\}}{3^2}$\\
+\item 状態8（図\ref{fig:all_switch_8}）の出力　$P_{out\,2,2}=P_{ls}\frac{2(1-\alpha)^8}{3^2}$\\
+\item 状態9（図\ref{fig:all_switch_9}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7}{3^2}$\\
+\item 状態10（図\ref{fig:all_switch_10}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7}{3^2}$\\
+\item 状態11（図\ref{fig:all_switch_11}）の出力　$P_{out\,2,2}=P_{ls}\frac{2(1-\alpha)^8}{3^3}$\\
+\item 状態12（図\ref{fig:all_switch_12}）の出力　$P_{out\,2,2}=P_{ls}\frac{2(1-\alpha)^8\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}$\\
+\end{itemize}
+
+以上のスイッチ状態の中で，その出力強度が最小となるのは状態11（図\ref{fig:all_switch_11}）の場合である．
+よって，各素子における損失が一律で$\alpha$の
+配列長N=2の光Race logic arrayでは，
+$P_{ls}\frac{2(1-\alpha)^8}{3^3} \geq P_{r}$となるように$P_{ls}$の値を決定する必要がある．
+受光器の最小受光感度を$P_{r}=-20[dBm]=0.01[mW]$，$\alpha = $0.1，0.01の場合の$P_{ls}$を表\ref{pls}に示す．
+\begin{table}[t!]
+\begin{center}
+\caption{配列長N=2の光Race logic arrayの消費電力}
+\begin{tabular}{|c|c|c|} \hline
+&$\alpha = $0.1&$\alpha = $0.01\\ \hline \hline
+$P_{ls}[mW]$&0.314&0.144\\ \hline
+\end{tabular}
+\label{pls}
+\end{center}
+\end{table}
