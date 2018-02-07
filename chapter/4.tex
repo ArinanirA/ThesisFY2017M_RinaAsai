@@ -9,48 +9,107 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 今回のシミュレーションにおいて，各素子において光伝搬信号に影響を与える雑音や損失は考慮していない．
 またOptisystemの仕様上，遅延素子で付与された遅延時間のみが考慮され，
 素子や導波路の伝搬遅延については考慮されていない．
-検証するスイッチの状態を図\ref{fig:test_swich}に，
+回路のスイッチが取りうる全状態を図\ref{fig:all_switch}に，
 シミュレーションの結果を図\ref{fig:test}に示す．
+今回のシミュレーションでは光遅延素子で発生する遅延時間が$1ns$と設定した．
 \begin{figure}[t!]
 \begin{center}
-\subfigure[配列が完全一致のスイッチ状態]{
-\includegraphics[keepaspectratio,scale=0.5]{fig/4/test_swich_a.eps}
-\label{fig:test_swich_a}}
-\subfigure[配列が一部一致の場合のスイッチ状態]{
-\includegraphics[keepaspectratio,scale=0.5]{fig/4/test_swich_b.eps}
-\label{fig:test_swich_b}}
-\subfigure[配列が完全不一致の場合のスイッチ状態]{
-\includegraphics[keepaspectratio,scale=0.5]{fig/4/test_swich_c.eps}
-\label{fig:test_swich_c}}
-\caption{配列長N=2における光Race Logic arrayのスイッチ状態}
-\label{fig:test_swich}
+\subfigure[状態1]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case1.eps}
+\label{fig:all_switch_1}}
+\subfigure[状態2]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case2.eps}
+\label{fig:all_switch_2}}
+\subfigure[状態3]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case3.eps}
+\label{fig:all_switch_3}}\\
+\subfigure[状態4]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case4.eps}
+\label{fig:all_switch_4}}
+\subfigure[状態5]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case5.eps}
+\label{fig:all_switch_5}}
+\subfigure[状態6]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case6.eps}
+\label{fig:all_switch_6}}\\
+\subfigure[状態7]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case7.eps}
+\label{fig:all_switch_7}}
+\subfigure[状態8]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case8.eps}
+\label{fig:all_switch_8}}
+\subfigure[状態9]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case9.eps}
+\label{fig:all_switch_9}}\\
+\subfigure[状態10]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case10.eps}
+\label{fig:all_switch_10}}
+\subfigure[状態11]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case11.eps}
+\label{fig:all_switch_11}}
+\subfigure[状態12]{
+\includegraphics[keepaspectratio,scale=0.3]{fig/4/case12.eps}
+\label{fig:all_switch_12}}\\
+\caption{取りうる全スイッチの状態}
+\label{fig:all_switch}
 \end{center}
 \end{figure}
 \begin{figure}[t!]
 \begin{center}
-\subfigure[光Race Logic arrayへの光伝搬入力信号強度]{
-\includegraphics[keepaspectratio,scale=0.37]{fig/4/test_in.png}
-\label{fig:test_in}}\\
-\subfigure[光Race Logic arrayへの光伝搬出力信号強度]{
-\includegraphics[keepaspectratio,scale=0.37]{fig/4/test_out.png}
-\label{fig:test_out}}
-\caption{Optisystemによる機能検証結果}
+\subfigure[光Race Logic arrayへの光伝搬入力信号 1]{
+\includegraphics[keepaspectratio,scale=0.23]{fig/4/test_in1.png}
+\label{fig:test_in1}}
+\subfigure[光Race Logic arrayへの光伝搬出力信号 1]{
+\includegraphics[keepaspectratio,scale=0.23]{fig/4/test_out1.png}
+\label{fig:test_out1}}\\
+\subfigure[光Race Logic arrayへの光伝搬入力信号 2]{
+\includegraphics[keepaspectratio,scale=0.23]{fig/4/test_in2.png}
+\label{fig:test_in2}}
+\subfigure[光Race Logic arrayへの光伝搬出力信号 2]{
+\includegraphics[keepaspectratio,scale=0.23]{fig/4/test_out2.png}
+\label{fig:test_out2}}\\
+\subfigure[光Race Logic arrayへの光伝搬入力信号 3]{
+\includegraphics[keepaspectratio,scale=0.23]{fig/4/test_in3.png}
+\label{fig:test_in3}}
+\subfigure[光Race Logic arrayへの光伝搬出力信号 3]{
+\includegraphics[keepaspectratio,scale=0.23]{fig/4/test_out3.png}
+\label{fig:test_out3}}
+\caption{Optisystemでの光伝搬入出力信号}
 \label{fig:test}
 \end{center}
 \end{figure}
-今回のシミュレーションでは光遅延素子で発生する遅延時間が1nsと設定した．
-また配列が一部一致の場合，取りうるスイッチ状態は図\ref{fig:test_swich_b}
-だけではない．
-今回のシミュレーションでは機能検証上の一例として図\ref{fig:test_swich_b}
-の状態を取り扱う．
 
-図\ref{fig:test_swich}のそれぞれの状態において，
-出力から最初に観測される信号のタイミングは
-入力から2ns後，3ns後，4ns後になると想定している．
-図\ref{fig:test}の0ns〜8nsの区間は図\ref{fig:test_swich_a}の状態，
-8ns〜14nsの区間は図\ref{fig:test_swich_b}の状態，
-14ns〜20nsの区間は図\ref{fig:test_swich_c}の状態である．
-図\ref{fig:test}を見ると，想定した動作をしているのが確認できた．
+表\ref{test_timing}に，図\ref{fig:all_switch}のそれぞれの状態ごとの，
+\begin{enumerate}
+\item 最初の光伝搬出力信号の伝搬遅延時間の想定値
+\item シミュレータ上の回路のスイッチがその状態を取る区間
+\item 結果から読み取った最初の光伝搬出力信号の伝搬遅延時間
+\end{enumerate}
+を示す．
+\begin{table}[t!]
+\begin{center}
+\caption{配列長N=2の光Race Logic arrayの動作検証結果}
+\begin{tabular}{|c|c|c|c|} \hline
+&1&2&3\\ \hline \hline
+状態1&$2ns$&図\ref{fig:test_in1},\ref{fig:test_out1}の$ns〜ns区間$&$2ns$\\ \hline
+状態2&$2ns$&図\ref{fig:test_in1},\ref{fig:test_out1}の$ns〜ns区間$&$2ns$\\ \hline
+状態3&$3ns$&図\ref{fig:test_in1},\ref{fig:test_out1}の$ns〜ns区間$&$3ns$\\ \hline
+状態4&$3ns$&図\ref{fig:test_in1},\ref{fig:test_out1}の$ns〜ns区間$&$3ns$\\ \hline
+状態5&$3ns$&図\ref{fig:test_in2},\ref{fig:test_out2}の$ns〜ns区間$&$3ns$\\ \hline
+状態6&$3ns$&図\ref{fig:test_in2},\ref{fig:test_out2}の$ns〜ns区間$&$3ns$\\ \hline
+状態7&$3ns$&図\ref{fig:test_in2},\ref{fig:test_out2}の$ns〜ns区間$&$3ns$\\ \hline
+状態8&$3ns$&図\ref{fig:test_in2},\ref{fig:test_out2}の$ns〜ns区間$&$3ns$\\ \hline
+状態9&$3ns$&図\ref{fig:test_in3},\ref{fig:test_out3}の$ns〜ns区間$&$3ns$\\ \hline
+状態10&$3ns$&図\ref{fig:test_in3},\ref{fig:test_out3}の$ns〜ns区間$&$3ns$\\ \hline
+状態11&$3ns$&図\ref{fig:test_in3},\ref{fig:test_out3}の$ns〜ns区間$&$3ns$\\ \hline
+状態12&$4ns$&図\ref{fig:test_in3},\ref{fig:test_out3}の$ns〜ns区間$&$4ns$\\ \hline
+\end{tabular}
+\label{test_timing}
+\end{center}
+\end{table}
+
+この機能検証結果から，光Race Logic arrayが
+想定した動作をしていることが確認できた．
 
 \section{評価}
 本節では，提案した光Race Logic arrayが
@@ -60,7 +119,7 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 各項目を算出するモデル式を構築し，評価を行う．
 
 \subsection{遅延時間}
-光Race logic arrayに光伝搬信号が入射されてからarray内を伝搬し，
+光Race Logic arrayに光伝搬信号が入射されてからarray内を伝搬し，
 最初に出力された信号が受光器で検出されるまでの遅延時間を考える．
 配列長Nの光Race logic arrayにおいて，最初に光伝搬信号が出力されるまでの回路遅延時間は
 配列の組み合わせによって異なる．
@@ -99,33 +158,6 @@ $T_{pd}が受光器が光出力信号を検出するまでに必要な時間で�
 \end{center}
 \end{figure}
 
-\begin{comment}
-ナノフォトニック・デバイスのゲート長が100$\mu m$，
-配列長N=64の場合においても，光Race Logic arrayでの
-一計算あたりの遅延時間は1.906$ns$である．
-同じスコアマトリクス（図\ref{fig:scorematrix_3}）をもって計算を行う
-CMOSを用いたRace Logic配列アラインメントスコア計算回路において，
-AMIS0.5μm プロセスを使用し，OSUスタンダードセルと
-AMIS スタンダードセルを持って実装された回路それぞれの
-シミュレーション結果が報告されている\cite {madhavan20174}．
-その結果と比較する（表\ref{latency_64}）と，配線遅延がないこと及び
-コントロールやカウンター部分での遅延を考慮していないことを考慮しても，
-遅延時間は小さくなると見積れる．
-
-\begin{table}[t!]
-\begin{center}
-\caption{配列長N=64の場合の遅延時間}
-\begin{tabular}{|c|c|c|} \hline
-デバイス&遅延時間（$ns$）&参照\\ \hline \hline
-ナノフォトニック・デバイス&1.906&-\\ \hline
-OSUスタンダードセル&160&\cite{madhavan2014race}\\ \hline
-AMISスタンダードセル&213.33&\cite{madhavan2014race}\\ \hline
-\end{tabular}
-\label{latency_64}
-\end{center}
-\end{table}
-\end{comment}
-
 \subsection{面積}
 提案したセルの構成（図\ref{fig:proposalcell}）より，
 セル一つの面積$A_{cell}$を表すモデル式は式\ref{eq:cellArea}と書ける．
@@ -139,7 +171,7 @@ $A_{coupler}・A_{splitter}はそれぞれ光結合器・光分配器の遅延�
 $A_{switch}が光スイッチの面積，A_{delay}は光遅延素子の面積である．$
 このセルを基準セルとする．
 
-基準セル並べてarrayを構成した時に，外周のセルはこの基準セルとは違う構成となる．
+セルを並べてarrayを構成した時に，外周のセルはこの基準セルとは違う構成となる．
 その差異の理解を助けるため，図\ref{fig:N=2}に配列長N=2の光Race Logic arrayの構造を示す．
 \begin{figure}[t!]
 \begin{center}
@@ -171,19 +203,6 @@ $A_{wire}はセル間の配線面積，A{ls}は光源の面積，A_{pd}は受光
 \label{fig:nanoArea}
 \end{center}
 \end{figure}
-
-\begin{comment}
-\subsection{ー計算毎のエネルギー}
-一計算毎のエネルギー$E$は式\ref{eq:Energy}によって求めることができる．
-\begin{equation}
-E=P*T+N^2 \times E_{v}
-\label{eq:Energy}
-\end{equation}
-
-$P$は光Race Logic arrayの消費電力，
-$T$は式\ref{eq:latency}で求めた一計算にかかる遅延時間，
-$E_{v}は光スイッチの駆動に必要なエネルギーである．$
-\end{comment}
 
 \subsection{消費電力}
 ここで本提案の光Race Logic arrayでの消費電力について考える．
@@ -232,48 +251,6 @@ $P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定するこ
 光源の光出力信号強度を変えることによって$P_{out\,N,N}の最小値 \geq P_{r}となるように$する．
 この光Race logic arrayの消費電力$PはP=P_{ls}$となる．
 
-\begin{figure}[t!]
-\begin{center}
-\subfigure[状態1]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case1.eps}
-\label{fig:all_switch_1}}
-\subfigure[状態2]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case2.eps}
-\label{fig:all_switch_2}}
-\subfigure[状態3]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case3.eps}
-\label{fig:all_switch_3}}\\
-\subfigure[状態4]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case4.eps}
-\label{fig:all_switch_4}}
-\subfigure[状態5]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case5.eps}
-\label{fig:all_switch_5}}
-\subfigure[状態6]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case6.eps}
-\label{fig:all_switch_6}}\\
-\subfigure[状態7]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case7.eps}
-\label{fig:all_switch_7}}
-\subfigure[状態8]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case8.eps}
-\label{fig:all_switch_8}}
-\subfigure[状態9]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case9.eps}
-\label{fig:all_switch_9}}\\
-\subfigure[状態10]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case10.eps}
-\label{fig:all_switch_10}}
-\subfigure[状態11]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case11.eps}
-\label{fig:all_switch_11}}
-\subfigure[状態12]{
-\includegraphics[keepaspectratio,scale=0.3]{fig/4/case12.eps}
-\label{fig:all_switch_12}}\\
-\caption{取りうる全スイッチの状態}
-\label{fig:all_switch}
-\end{center}
-\end{figure}
 配列長N=2の光Race logic arrayの光スイッチは，配列の組み合わせによってその状態を変え，
 図\ref{fig:all_switch}に示す12通りのいずれかの状態を取る．
 図\ref{fig:all_switch}中のスイッチは，白塗りがONの状態を，
