@@ -9,8 +9,15 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 今回のシミュレーションにおいて，各素子において光伝搬信号に影響を与える雑音や損失は考慮していない．
 またOptisystemの仕様上，遅延素子で付与された遅延時間のみが考慮され，
 素子や導波路の伝搬遅延については考慮されていない．
-回路のスイッチが取りうる全状態を図\ref{fig:all_switch}に，
-シミュレーションの結果を図\ref{fig:test}に示す．
+配列長N=2の光Race logic arrayの光スイッチは，配列の組み合わせによってその状態を変える．
+回路のスイッチが取りうる全状態を図\ref{fig:all_switch}に示す．
+図\ref{fig:all_switch}中のスイッチは，白塗りがオンの状態を，
+黒塗りがオフの状態をそれぞれ表している
+図\ref{fig:all_switch_1}〜図\ref{fig:all_switch_2}は配列が完全に一致する場合，
+図\ref{fig:all_switch_3}〜図\ref{fig:all_switch_11}は配列中１文字がする場合，
+図\ref{fig:all_switch_12}は配列が完全に不一致の場合である．
+
+Optisystemでのシミュレーションの結果を図\ref{fig:test}に示す．
 今回のシミュレーションでは光遅延素子で発生する遅延時間が$1ns$と設定した．
 \begin{figure}[t!]
 \begin{center}
@@ -251,13 +258,8 @@ $P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定するこ
 光源の光出力信号強度を変えることによって$P_{out\,N,N}の最小値 \geq P_{r}となるように$する．
 この光Race logic arrayの消費電力$PはP=P_{ls}$となる．
 
-配列長N=2の光Race logic arrayの光スイッチは，配列の組み合わせによってその状態を変え，
+配列長N=2の光Race logic arrayの光スイッチは，
 図\ref{fig:all_switch}に示す12通りのいずれかの状態を取る．
-図\ref{fig:all_switch}中のスイッチは，白塗りがONの状態を，
-黒塗りがOFFの状態をそれぞれ表している．
-図\ref{fig:all_switch_1}〜図\ref{fig:all_switch_2}は配列が完全に一致する場合，
-図\ref{fig:all_switch_3}〜図\ref{fig:all_switch_11}は配列中１文字がする場合，
-図\ref{fig:all_switch_12}は配列が完全に不一致の場合である．
 各状態での出力を以下に示す．
 \begin{itemize}
 \item 状態1（図\ref{fig:all_switch_1}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^6}{3^2}$\\
@@ -278,10 +280,12 @@ $P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定するこ
 よって，各素子における損失が一律で$\alpha$の
 配列長N=2の光Race logic arrayでは，
 $P_{ls}\frac{2(1-\alpha)^8}{3^3} \geq P_{r}$となるように$P_{ls}$の値を決定する必要がある．
+
+$P_{ls}\frac{2(1-\alpha)^8}{3^3} = P_{r}$とする時，
 受光器の最小受光感度を$P_{r}=-20[dBm]=0.01[mW]$，$\alpha = $0.1，0.01の場合の$P_{ls}$を表\ref{pls}に示す．
 \begin{table}[t!]
 \begin{center}
-\caption{配列長N=2の光Race logic arrayの消費電力}
+\caption{配列長N=2の光Race Logic arrayの消費電力}
 \begin{tabular}{|c|c|c|} \hline
 &$\alpha = $0.1&$\alpha = $0.01\\ \hline \hline
 $P_{ls}[mW]$&0.314&0.144\\ \hline
