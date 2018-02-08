@@ -59,26 +59,32 @@
 遮断しきれずに漏れ出した光伝搬信号は次のセルへと伝搬し光アンプにて増幅され，
 雑音信号のように振る舞う．
 具体例として，配列長N=2の光Race Logic arrayの出力を考える．
-光Race Logic arrayのスイッチ状態が図\ref{}の状態を取る時，
+光Race Logic arrayのスイッチ状態が図\ref{fig:all_switch_12}の状態を取る時，
 1つのセルの伝搬遅延時間を$1ns$とすると，
 最初に光伝搬出力信号が検出されるのは入力から$4ns$後と想定される．
 図\ref{fig:off_beta}に光Race Logic arrayに光伝搬信号を入力してからの
 様子を示す．
-\begin{comment}
+赤く示した部分が光伝搬信号が伝搬している経路と到達する素子である．
+青く示した部分は光スイッチで漏れ出した信号が伝搬する経路である．
+光伝搬信号入力から$2ns$後と$3ns$後に光スイッチで漏れ出した
+光伝搬信号が受光器まで到達する．
+この光スイッチで漏れ出した光伝搬信号の強度が受光器の最小受光感度
+以上になると，本来想定された伝搬遅延時間以外のタイミングで
+出力信号を検出してしまう．
 \begin{figure}[t!]
 \begin{center}
 \subfigure[光伝搬信号入力から$1ns$後]{
-\includegraphics[keepaspectratio,scale=0.2]{fig/5/.eps}}
-\subfigure[]{
-\includegraphics[keepaspectratio,scale=0.4]{fig/5/.eps
-}}
-\caption{スイッチがオフ動作の際の漏れを考慮した時の光Race Logic arrayの挙動}
+\includegraphics[keepaspectratio,scale=0.15]{fig/5/lightracelogic_N_2_beta1.png}}
+\subfigure[光伝搬信号入力から$2ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/5/lightracelogic_N_2_beta2.png}}\\
+\subfigure[光伝搬信号入力から$3ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/5/lightracelogic_N_2_beta3.png}}
+\subfigure[光伝搬信号入力から$4ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_on4.png}}\\
+\caption{光スイッチの漏れを考慮した光Race Logic arrayの挙動}
 \label{fig:off_beta}
 \end{center}
 \end{figure}
-\end{comment}
-これを繰り返す事で本来は光Race Logic arrayから信号が出力されないと想定されるタイミングで
-漏れ出した信号が出力され，受光器によって検知される可能性がある
 
 また，光スイッチにはスイッチがオン動作の際にスイッチから回路外へ光伝搬信号が
 どの程度漏れ出すかを表す漏れ率$\alpha$が存在する．
@@ -121,11 +127,13 @@ Race Logicは伝搬信号に遅延時間を重みとして付与して動的計�
 考えることができる．
 今回はその中でも光伝搬信号の位相に着目して述べる．
 
-設計選択肢として位相を選択する場合，光Race Logic arrayからの光出力信号の
-位相を計測する．
-部分問題の解に相当する重み付けは位相シフタなどを用いて位相をずらすことによって行う．
-DNA配列アラインメントスコアの例を用いて述べると，
-光出力信号の位相が完全一致において推定される出力信号の位相と差があるかがスコアに相当する．
+設計選択肢として位相を選択する場合，光Race Logic arrayからの光出力信号の位相が
+とある情報を持つ計算結果となる．
+各パスでの重み付けは位相シフタなどを用いて位相をずらすことによって行う．
+配列アラインメントスコアの例を用いて述べると，
+スコアマトリクスに基づく位相変化を光伝搬信号に付与し，
+光出力信号の位相が配列が完全に一致する場合において推定される光出力信号の位相と
+どの程度差があるかが配列アラインメントスコアに相当する．
 
 位相は$0〜2\pi$の間の値を取る．
 光信号の位相計測器の分解能により，重み付けに用いる位相差の最小単位が決定される．
