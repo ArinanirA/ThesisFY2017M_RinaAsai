@@ -299,9 +299,11 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 \label{fig:proposalcell}
 \end{center}
 \end{figure}
+
+
 提案回路のセルにおける，3つのユニットの構成・動作を述べる．
-\begin{itemize}
-\item 合波ユニット\\
+\begin{description}
+\item[合波ユニット]
 このユニットでは3入力1出力の光カプラを用いて合波が行われる．
 図\ref{fig:couplerunit}にその動作を示す．
 \begin{figure}[t!]
@@ -313,7 +315,7 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 \end{figure}
 この時，3方向それぞれからの光入力信号が光カプラに到達するまでの時間は
 同じでなければならない．
-\item アンプユニット\\
+\item[アンプユニット]
 合波ユニットを経た光伝搬信号は，光アンプにて増幅される．
 図\ref{fig:ampunit}にその動作を示す．
 \begin{figure}[t!]
@@ -325,11 +327,11 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 \end{figure}
 この光アンプでは，光伝搬信号が各素子を伝搬した際の強度損失を
 補う役割をしている．
-\item メインユニット\\
+\item[メインユニット]
 メインユニットに求められる機能は右，下，斜下の3つの経路への分波と，
 各伝搬経路ごとにスコアマトリクスに基づく重み付けである．
 右，下，斜下の3つの経路への分波は，図\ref{fig:mainunit_s}に挙動を示すように
-1入力3出力の光カプラを用いて行われる．
+1入力3出力の光カプラを用いて行われる．\\
 \begin{figure}[t!]
 \begin{center}
 \includegraphics[keepaspectratio,scale=0.4]{fig/3/lightracelogic_cell_6_3.eps}
@@ -337,8 +339,7 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 \label{fig:mainunit_s}
 \end{center}
 \end{figure}
-
-次に各伝搬経路ごとのスコアマトリクスに基づいての重み付けについて説明する．
+\ \ 次に各伝搬経路ごとのスコアマトリクスに基づいての重み付けについて説明する．
 斜下への伝搬経路では，文字列の一致・不一致によってそれぞれ違う重み付けがされなければならない．
 今回使用するスコアマトリクスにおいて，一致スコアは1，不一致スコアは$\infty$である．
 このスコアに基づく重み付けを行うため，光スイッチを使用した．
@@ -354,15 +355,15 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 セルへの伝搬は文字列の一致・不一致に関わらず無条件に行われる．
 文字列の欠損と挿入をギャップといい，ギャップに対応したスコアをギャップスコアという．
 右，下への伝搬経路ではギャップスコアに基づく遅延が発生するように，
-光遅延素子を設定する．
-今回使用するスコアマトリクスにおいては，ギャップスコアは１の重み付けをされており，
+光遅延素子を設定する．\\
+\ \ 今回使用するスコアマトリクスにおいては，ギャップスコアは１の重み付けをされており，
 これは一致スコアと同じ重みである．
 よって今回，光遅延素子で設定すべき遅延時間は，
 光遅延素子を通過して次のセルへ出力されるまでの遅延時間が
 斜め下への伝搬経路で発生する遅延時間と同じになるような量である．
 3つの伝搬経路において遅延時間の重み付けをされた光伝搬信号は
-次のセルへと伝搬される．
-図\ref{fig:mainunit}に比較する文字列が一致した場合と不一致の場合
+次のセルへと伝搬される．\\
+\ \ 図\ref{fig:mainunit}に比較する文字列が一致した場合と不一致の場合
 それぞれのメインユニットの挙動を示す．
 \begin{figure}[t!]
 \begin{center}
@@ -374,11 +375,49 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 \label{fig:mainunit}
 \end{center}
 \end{figure}
-\end{itemize}
+\end{description}
 
 このセルを並べることでDNA配列アラインメントスコア計算を対象とした
 光Race Logic arrayを構築する．
-光Race Logic arrayに光伝搬信号を入力してから出力されるまでの伝搬遅延時間が
-2つの配列間のアラインメントスコアに対応している．
+配列長N=2の時の光Race Logic arrayの構成，
+比較する文字列が完全に一致するの場合の光Race Logic arrayの挙動，
+比較する文字列が完全に不一致の場合の光Race Logic arrayの挙動をそれぞれ
+図\ref{fig:N=2}，図\ref{fig:N=2_on}，図\ref{fig:N=2_off}に示す．
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[keepaspectratio,scale=0.35]{fig/3/lightracelogic_N_2.png}
+\caption{配列長N=2の光Race Logic arrayの構造}
+\label{fig:N=2}
+\end{center}
+\end{figure}
+図\ref{fig:N=2_on}，図\ref{fig:N=2_off}の赤く示した経路が光伝搬信号が
+伝搬している経路と到達する素子である．
+\begin{figure}[t!]
+\begin{center}
+\subfigure[光伝搬信号入力から$1ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_on1.png}}
+\subfigure[光伝搬信号入力から$2ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_on2.png}}\\
+\subfigure[光伝搬信号入力から$3ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_on3.png}}
+\subfigure[光伝搬信号入力から$4ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_on4.png}}\\
+\caption{比較する文字列が完全に一致するの場合の光Race Logic arrayの挙動}
+\label{fig:N=2_on}
+\end{center}
+\end{figure}
+\begin{figure}[t!]
+\begin{center}
+\subfigure[光伝搬信号入力から$1ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_off1.png}}
+\subfigure[光伝搬信号入力から$2ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_off2.png}}\\
+\subfigure[光伝搬信号入力から$3ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_off3.png}}
+\subfigure[光伝搬信号入力から$4ns$後]{
+\includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_off4.png}}\\
+\caption{比較する文字列が完全に不一致の場合の光Race Logic arrayの挙動}
+\label{fig:N=2_off}
+\end{center}
+\end{figure}
 
-この提案回路について，第4章で検証・評価を行う．
