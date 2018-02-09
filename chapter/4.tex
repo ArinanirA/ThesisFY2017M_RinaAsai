@@ -1,5 +1,5 @@
 \chapter{検証・評価}
-本章では提案したDNA配列アラインメントスコア計算用の光Race Logic回路について機能検証と評価を行う．
+本章では提案したDNA配列アラインメントスコア計算用の光Race Logic arrayについて機能検証と評価を行う．
 \section{検証}
 検証に用いたのはOptiwave社が提供するOptisystemというシミュレータである．
 OptiSystemは光ネットワークのあらゆるタイプの広範囲のシステムの設計，評価，シミュレーションを行なうソフトウェアである．
@@ -9,7 +9,7 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 今回のシミュレーションにおいて，各素子において光伝搬信号に影響を与える雑音や損失は考慮していない．
 またOptisystemの仕様上，遅延素子で付与された遅延時間のみが考慮され，
 素子や導波路の伝搬遅延については考慮されていない．
-配列長N=2の光Race logic arrayの光スイッチは，配列の組み合わせによってその状態を変える．
+配列長N=2の光Race Logic arrayの光スイッチは，配列の組み合わせによってその状態を変える．
 回路のスイッチが取りうる全状態を図\ref{fig:all_switch}に示す．
 図\ref{fig:all_switch}中のスイッチは，白塗りがオンの状態を，
 黒塗りがオフの状態をそれぞれ表している
@@ -128,7 +128,7 @@ Optisystemでのシミュレーションの結果を図\ref{fig:test}に示す�
 \subsection{遅延時間}
 光Race Logic arrayに光伝搬信号が入射されてからarray内を伝搬し，
 最初に出力された信号が受光器で検出されるまでの遅延時間を考える．
-配列長Nの光Race logic arrayにおいて，最初に光伝搬信号が出力されるまでの回路遅延時間は
+配列長Nの光Race Logic arrayにおいて，最初に光伝搬信号が出力されるまでの回路遅延時間は
 配列の組み合わせによって異なる．
 二つの配列が完全に不一致の場合，最初に光伝搬信号が出力されるまでの回路遅延時間は
 最長となる．
@@ -180,7 +180,7 @@ $A_{switch}が光スイッチの面積，A_{delay}は光遅延素子の面積で
 
 セルを並べてarrayを構成した時に，図\ref{fig:N=2}に示すように，
 外周のセルはこの基準セルとは違う構成となる．
-この差異に留意しながら，配列長Nの光Race logic arrayの面積$A$をモデル化した．
+この差異に留意しながら，配列長Nの光Race Logic arrayの面積$A$をモデル化した．
 モデル式を式\ref{eq:Area}に示す．
 \begin{equation}
 A = A_{wire}+N^2 \times A_{cell} + 2N \times (A_{delay}+A_{amp}) +A{ls}+A_{pd}
@@ -240,9 +240,9 @@ $P_{out\,N,N}$の値は配列の組み合わせ，即ちスイッチの状態に
 受光器の最小受光感度$P_{r}$を用いると，
 $P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定することが必要となる．
 
-\subsubsection{ケーススタディ：配列長N=2の光Race logic arrayにおける消費電力}
+\subsubsection{ケーススタディ：配列長N=2の光Race Logic arrayにおける消費電力}
 ここで，図\ref{fig:loss}に示すように各素子における損失が一律で$\alpha$の場合において，
-配列長N=2の光Race logic arrayにおける消費電力を考える．
+配列長N=2の光Race Logic arrayにおける消費電力を考える．
 \begin{figure}[t!]
 \begin{center}
 \includegraphics[keepaspectratio,scale=0.5]{fig/4/loss.eps}
@@ -257,9 +257,9 @@ $P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定するこ
 今回は回路規模が小さいので，各セルのアンプユニットでの
 光伝搬信号強度の増幅は行わず，
 光源の光出力信号強度を変えることによって$P_{out\,N,N}の最小値 \geq P_{r}となるように$する．
-この光Race logic arrayの消費電力$PはP=P_{ls}$となる．
+この光Race Logic arrayの消費電力$PはP=P_{ls}$となる．
 
-配列長N=2の光Race logic arrayの光スイッチは，
+配列長N=2の光Race Logic arrayの光スイッチは，
 図\ref{fig:all_switch}に示す12通りのいずれかの状態を取る．
 各状態での出力を以下に示す．
 \begin{itemize}
@@ -279,7 +279,7 @@ $P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定するこ
 
 以上のスイッチ状態の中で，その出力強度が最小となるのは状態11（図\ref{fig:all_switch_11}）の場合である．
 よって，各素子における損失が一律で$\alpha$の
-配列長N=2の光Race logic arrayでは，
+配列長N=2の光Race Logic arrayでは，
 $P_{ls}\frac{2(1-\alpha)^8}{3^3} \geq P_{r}$となるように$P_{ls}$の値を決定する必要がある．
 
 $P_{ls}\frac{2(1-\alpha)^8}{3^3} = P_{r}$とする時，
