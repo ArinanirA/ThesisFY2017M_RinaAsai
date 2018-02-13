@@ -1,9 +1,9 @@
-\chapter{ナノフォトニック・デバイスを用いたRace Logic実装の提案}
-本章では，本提案のナノフォトニック・デバイスを用いたRace Logic（以下，光Race Logic）arrayを理解する上で必要な光デバイスに関する基本事項を説明し，光Race Logic実装について述べる．
+\chapter{ナノフォトニック・デバイスを用いたレースロジック実装の提案}
+本章では，本提案のナノフォトニック・デバイスを用いたレースロジック（以下，光レースロジック）アレイを理解する上で必要な光デバイスに関する基本事項を説明し，光レースロジック実装について述べる．
 
 \section{光デバイスについて}
 本節では，まず光デバイスの特徴と代表的な光素子，ナノフォトニクスについて説明する．
-その後，光デバイスとRace Logicの親和性について述べる．
+その後，光デバイスとレースロジックの親和性について述べる．
 
 \subsection{光デバイスの特徴}
 以下に光デバイスの特徴をまとめ，詳細を説明する．
@@ -234,7 +234,7 @@ N入力M出力のものが光スターカプラ(図\ref{fig:lcoup4})と呼ばれ
 半導体のナノ加工技術が素子の加工技術のベースになり，近接場光の局在性をはじめとする近接場光にしかない特徴を活かして，
 光信号をナノレベルで制御することが可能になって成り立つ技術がナノフォトニクスである．
 
-\subsection{光デバイスとRace Logic}
+\subsection{光デバイスとレースロジック}
 前述した通り，光デバイスとは光伝搬信号を取り扱う素子を指す．
 光伝搬信号の情報媒体は信号強度や位相，遅延時間といったアナログ量であり，
 光伝搬信号はアナログ信号である．
@@ -242,22 +242,22 @@ N入力M出力のものが光スターカプラ(図\ref{fig:lcoup4})と呼ばれ
 その電気信号はデジタル信号である．
 扱う信号がデジタル信号であるかアナログ信号であるかは二つのデバイスの大きな違いである．
 
-また，Race Logicは動的計画法で解くことができる最適化問題の答えを
+また，レースロジックは動的計画法で解くことができる最適化問題の答えを
 遅延時間というアナログ量で表現するアプローチである．
 
 本研究では，情報媒体にアナログ量を取り扱う光デバイスと
-Race Logicとの親和性に着目した．
+レースロジックとの親和性に着目した．
 ナノフォトニクック・デバイスをはじめとする
 光デバイスの光速での信号処理という特徴から，
-CMOSデバイスを用いたRace Logic回路よりも性能において優位になると考え，
-ナノフォトニック・デバイスを用いたRace Logic回路を提案する．
+CMOSデバイスを用いたレースロジック回路よりも性能において優位になると考え，
+ナノフォトニック・デバイスを用いたレースロジック回路を提案する．
 
 \section{提案回路}
-ナノフォトニック・デバイスを用いたRace Logic（以下，光Race Logic）回路も，
-図\ref{fig:ctrl}に示すようにコントロールと光伝搬出力信号のarray伝搬遅延時間を
-計測する部分とarrayからなるものを想定する．
-本論文では，光Race Logic arrayのセル構造を提案する．
-図\ref{fig:lightracelogiccell}に光Race Logic arrayのセルの概要を示す．
+ナノフォトニック・デバイスを用いたレースロジック回路も，
+図\ref{fig:ctrl}に示すようにコントロールと光伝搬出力信号のアレイ伝搬遅延時間を
+計測する部分とアレイからなるものを想定する．
+本論文では，光レースロジックアレイのセル構造を提案する．
+図\ref{fig:lightracelogiccell}に光レースロジックアレイのセルの概要を示す．
 \begin{figure}[t!]
 \begin{center}
 \includegraphics[keepaspectratio,scale=0.5]{fig/3/lightracelogic_cell_1.png}
@@ -277,7 +277,7 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 対象とするアプリケーションや設定する競争条件によって，セルの構成は詳細に決定する．
 
 本論文ではDNAのグローバル配列アラインメントスコア計算を対象とした
-非同期型光Race Logic回路のarrayを提案する．
+非同期型光レースロジック回路のアレイを提案する．
 今回の提案回路で非同期型の構成を選択したのは，
 光伝搬信号は蓄積が困難であるという点を考慮した結果である．
 計算に用いるスコアマトリクスは式\ref{eq:mchun}を用いて求めた．
@@ -378,15 +378,15 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 \end{itemize}
 
 このセルを並べることでDNA配列アラインメントスコア計算を対象とした
-光Race Logic arrayを構築する．
-配列長N=2の時の光Race Logic arrayの構成，
-比較する文字列が完全に一致するの場合の光Race Logic arrayの挙動，
-比較する文字列が完全に不一致の場合の光Race Logic arrayの挙動をそれぞれ
+光レースロジックアレイを構築する．
+配列長N=2の時の光レースロジックアレイの構成，
+比較する文字列が完全に一致するの場合の光レースロジックアレイの挙動，
+比較する文字列が完全に不一致の場合の光レースロジックアレイの挙動をそれぞれ
 図\ref{fig:N=2}，図\ref{fig:N=2_on}，図\ref{fig:N=2_off}に示す．
 \begin{figure}[t!]
 \begin{center}
 \includegraphics[keepaspectratio,scale=0.35]{fig/3/lightracelogic_N_2.png}
-\caption{配列長N=2の光Race Logic arrayの構造}
+\caption{配列長N=2の光レースロジックアレイの構造}
 \label{fig:N=2}
 \end{center}
 \end{figure}
@@ -402,7 +402,7 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 \includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_on3.png}}
 \subfigure[光伝搬信号入力から$4ns$後]{
 \includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_on4.png}}\\
-\caption{比較する文字列が完全に一致するの場合の光Race Logic arrayの挙動}
+\caption{比較する文字列が完全に一致するの場合の光レースロジックアレイの挙動}
 \label{fig:N=2_on}
 \end{center}
 \end{figure}
@@ -416,7 +416,7 @@ CMOSデバイスを用いたRace Logic回路よりも性能において優位に
 \includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_off3.png}}
 \subfigure[光伝搬信号入力から$4ns$後]{
 \includegraphics[keepaspectratio,scale=0.15]{fig/3/lightracelogic_N_2_off4.png}}\\
-\caption{比較する文字列が完全に不一致の場合の光Race Logic arrayの挙動}
+\caption{比較する文字列が完全に不一致の場合の光レースロジックアレイの挙動}
 \label{fig:N=2_off}
 \end{center}
 \end{figure}
