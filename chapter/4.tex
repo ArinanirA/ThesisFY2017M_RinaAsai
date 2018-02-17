@@ -1,7 +1,7 @@
 \chapter{検証・評価}
 本章では提案したDNA配列アラインメントスコア計算用の光レースロジックアレイについて機能検証と評価を行う．
 \section{検証}
-検証に用いたのはOptiwave社が提供するOptisystemというシミュレータである．
+検証に用いたのはOptiwave社が提供するOptisystemというシミュレータである\cite{Optisystem}．
 OptiSystemは光ネットワークのあらゆるタイプの広範囲のシステムの設計，評価，シミュレーションを行なうソフトウェアである．
 素子レベルからシステムレベルまでの物理レイヤー上の光通信システムの設計と解析を行うことができる．
 
@@ -13,9 +13,11 @@ OptiSystemは光ネットワークのあらゆるタイプの広範囲のシス�
 回路のスイッチが取りうる全状態を図\ref{fig:all_switch}に示す．
 図\ref{fig:all_switch}中のスイッチは，白塗りがオンの状態を，
 黒塗りがオフの状態をそれぞれ表している
-図\ref{fig:all_switch_1}〜図\ref{fig:all_switch_2}は配列が完全に一致する場合，
-図\ref{fig:all_switch_3}〜図\ref{fig:all_switch_11}は配列中１文字がする場合，
-図\ref{fig:all_switch_12}は配列が完全に不一致の場合である．
+図\ref{fig:all_switch_1}は配列X=``AA"，配列Y=``AA"のように配列が完全に一致する場合，
+図\ref{fig:all_switch_2}は配列X=``AG"，配列Y=``AG"のように配列が完全に一致する場合，
+図\ref{fig:all_switch_3}〜図\ref{fig:all_switch_11}は
+配列X=``AG"，配列Y=``AC"のように配列中の１文字が一致する場合，
+図\ref{fig:all_switch_12}は配列X=``AG"，配列Y=``CT"のように配列が完全に不一致の場合である．
 
 Optisystemでのシミュレーションの結果を図\ref{fig:test}に示す．
 今回のシミュレーションでは光遅延素子で発生する遅延時間が$1ns$と設定した．
@@ -136,22 +138,23 @@ Optisystemでのシミュレーションの結果を図\ref{fig:test}に示す�
 
 図\ref{fig:proposalcell}の構造より構築した遅延時間$T$のモデル式を式\ref{eq:latency}に示す．
 \begin{eqnarray}
-&&T = T_{wire}+2N \times T_{cell-pass}+T_{pd} \nonumber \\
+&&T = 2N \times T_{cell-pass}+T_{pd} \nonumber \\
 &&T_{cell-pass} = T_{cell-wire}+T_{coupler}+T_{amp}+T_{splitter}+T_{switch-pass}
 \label{eq:latency}
 \end{eqnarray}
 
-$T_{wire}はセル間の配線遅延時間，T_{cell-pass}は一つのセルを通過する遅延時間，T_{pd}は受光器の応答時間である．$
+$T_{cell-pass}は一つのセルを通過する遅延時間，T_{pd}は受光器の応答時間である．$
 $T_{cell-pass}の内訳はT_{cell-wire}がセル内部の配線遅延，$
 $T_{coupler}・T_{splitter}がそれぞれ光結合器・光分配器の遅延時間，$
 $T_{amp}がアンプの遅延時間，T_{switch-pass}が光スイッチ遅延時間である．$
 $T_{wire}とT_{cell-pass}が光伝搬入力信号が$光レースロジック アレイ$を伝搬するために必要な時間，$
 $T_{pd}が受光器が光出力信号を検出するまでに必要な時間である．$
 式\ref{eq:latency}に示す通り，遅延時間は
-配列長Nに線形にスケーリングする．
+配列長Nに線形にスケールする．
 
 光伝搬信号は光デバイス内部を光速で通過するため，光デバイス内の遅延時間は素子のゲート長に依存する．
-今回は，ナノフォトニック・デバイスのゲート長が100，10，1$\mu m$の場合の
+今回は，セルを構成する各素子のゲート長が全て同じであると仮定し，
+ゲート長が100，10，1$\mu m$の場合の
 光レースロジックアレイの遅延時間を示す．
 なお，配線遅延に関しては今回は無視している．
 図\ref{fig:nanolatency}の縦軸は遅延時間，横軸は配列長Nである．
@@ -190,17 +193,39 @@ $A_{switch}が光スイッチの面積，A_{delay}は光遅延素子の面積で
 \label{fig:N=2_1}
 \end{center}
 \end{figure}
-この差異に留意しながら，配列長Nの光レースロジックアレイの面積$A$をモデル化した．
-モデル式を式\ref{eq:Area}に示す．
+この差異に留意しながら，配列長Nの光レースロジックアレイの面積$A$をモデル化していく．
+面積$A$の式を式\ref{eq:Area1}に示す．
+\begin{eqnarray}
+A = &&(N-1)^2 \times A_{cell} 
++ A_{splitter}+A_{switch}+2A_{delay}
+\nonumber \\
+&&+ N \times (A{amp}+A_{splitter}+A_{switch}+2A_{delay}) 
++ 2 (A_{delay}+A_{amp}) 
+\nonumber \\
+&&+ N \times (A_{coupler}+A_{amp}+A_{delay})
++A_{coupler}+A_{amp}
++A_{ls}+A_{pd}
+\label{eq:Area1}
+\end{eqnarray}
+第1項は全ての基準セルの面積，
+第2〜4項は1行目1列目のセルの面積，
+第5項は1行目の両端以外と1列目の両端以外のセルの面積，
+第6項は1行目N列目とN行目1列目のセルの面積，
+第7項はN行目の両端以外とN列目の両端以外のセルの面積，
+第8項はN行目N列目のセルの面積，
+第9項は光源の面積，
+第10項は受光器の面積をそれぞれ表している．
+式\ref{eq:Area1}を整理した面積$A$のモデル式を式\ref{eq:Area}に示す．
 \begin{equation}
-A = A_{wire}+N^2 \times A_{cell} + 2N \times (A_{delay}+A_{amp}) +A_{ls}+A_{pd}
+A = N^2 \times A_{cell} + 2N \times (A_{delay}+A_{amp}) +A_{ls}+A_{pd}
 \label{eq:Area}
 \end{equation}
 
-$A_{wire}はセル間の配線面積，A_{ls}は光源の面積，A_{pd}は受光器の面積である．$
 式\ref{eq:Area}が示すように，面積は
-配列長Nの２乗にスケーリングする．
+配列長Nの２乗にスケールする．
 
+遅延時間の場合と同様に，セルを構成する各素子のゲート長が全て同じであると仮定する．
+この時，各素子の面積は1000，50，3$\mu m^2$となる．
 ナノフォトニック・デバイスのゲート長が100，10，1$\mu m$の場合の
 光レースロジックアレイの面積を示す．
 なお，配線面積に関しては今回は無視している．
@@ -223,7 +248,7 @@ P=P_{ls}+P_{amp}
 \end{equation}
 
 $P$の値は，光レースロジックアレイが機能を担保できる値に設定しなければならない．
-そこで，光レースロジックアレイの機能担保について具体的に見ていく．
+そこで，光レースロジックアレイの機能担保について具体的に議論する．
 
 配列長Nの光レースロジックアレイのN行N列目のセルからの
 光伝搬出力信号強度$P_{out\,N,N}$は
@@ -233,7 +258,7 @@ P_{out\,N,N}=Loss_{N,N}(P_{out\,(N-1),(N-1)}+P_{out\,(N-1),N}+P_{out\,N,(N-1)})
 \label{eq:power_out}
 \end{equation}
 
-$N \geq 0,P_{out\,-1,-1}=P_{ls},P_{out\,-1,0}=0,P_{out\,0,-1}=0である．$
+$N \geq 1,P_{out\,0,0}=P_{ls},P_{out\,0,1}=0,P_{out\,1,0}=0である．$
 $Loss_{N,N}$はN行N列目のセルに光伝搬信号が入力されてから出力される際のロスである．
 \begin{figure}[t!]
 \begin{center}
@@ -243,7 +268,7 @@ $Loss_{N,N}$はN行N列目のセルに光伝搬信号が入力されてから出
 \end{center}
 \end{figure}
 とあるセルは図\ref{fig:nanopower}に示すように前段の3つのセルからの出力を
-入力とするので，式\ref{eq:power_out}のような式が書ける．
+入力とするため，式\ref{eq:power_out}となる．
 
 $P_{out\,N,N}$の値は配列の組み合わせ，即ちスイッチの状態によって大きく変化する．
 光レースロジックアレイからの光伝搬出力信号は受光器で検出されなければならない．
@@ -264,6 +289,8 @@ $P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定するこ
 図\ref{fig:proposalcell}に示すセルにおいて，光信号を伝搬させる際に損失を与える素子は
 光結合器，光分配器，光スイッチ，光遅延素子とする．
 この4つの素子での損失を$\alpha$とし，その他の損失は考えない．
+また，光分配器において，光伝搬信号は
+強度を3分割される．
 今回は回路規模が小さいので，各セルのアンプユニットでの
 光伝搬信号強度の増幅は行わず，
 光源の光出力信号強度を変えることによって$P_{out\,N,N}の最小値 \geq P_{r}となるように$する．
@@ -271,20 +298,299 @@ $P_{out\,N,N}の最小値 \geq P_{r}となるようにP$の値を決定するこ
 
 配列長N=2の光レースロジックアレイの光スイッチは，
 図\ref{fig:all_switch}に示す12通りのいずれかの状態を取る．
+例として状態1，状態11，状態12の時の出力を求める過程を示す．
+\begin{itemize}
+\item 状態1の場合\\
+一つのセルを通過する時間を1区間と呼称する．
+光レースロジックアレイに光源からの光伝搬信号が
+入力されてから出力されるまでの各区間の信号伝搬経路を模式図\ref{fig:ver1}に表す．
+\begin{figure}[t!]
+\begin{center}
+\subfigure[入力から1区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex1.eps}
+\label{fig:ver1.1}}
+\subfigure[入力から2区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex2.eps}
+\label{fig:ver1.2}}\\
+\subfigure[入力から3区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex3.eps}
+\label{fig:ver1.3}}
+\caption{状態1の時の光信号の伝搬の様子}
+\label{fig:ver1}
+\end{center}
+\end{figure}
+
+図\ref{fig:ver1.1}の時，1行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光スイッチまたは光遅延素子の
+2つの損失を与える素子を通過する．
+1行1列目のセルの出力は次の式で表せられる．
+$$P_{out\,1,1}=P_{ls}\frac{(1-\alpha)^2}{3}$$
+
+図\ref{fig:ver1.2}の時，2行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光スイッチまたは光遅延素子の
+2つの損失を与える素子を通過する．
+2行1列目のセルの出力は次の式で表せられる．
+$$P_{out\,2,1}=\frac{(1-\alpha)^2}{3}P_{ls}\frac{(1-\alpha)^2}{3}
+=P_{ls}\frac{(1-\alpha)^4}{3^2}$$
+
+1行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光スイッチまたは光遅延素子の
+2つの損失を与える素子を通過する．
+1行2列目のセルの出力は次の式で表せられる．
+$$P_{out\,1,2}=\frac{(1-\alpha)^2}{3}P_{ls}\frac{(1-\alpha)^2}{3}=P_{ls}\frac{(1-\alpha)^4}{3^2}$$
+
+2行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器，光分配器，光スイッチまたは光遅延素子の
+3つの損失を与える素子を通過する．
+2行2列目のセルの出力は次の式で表せられる．
+$$P_{out\,2,2}=\frac{(1-\alpha)^3}{3}P_{ls}\frac{(1-\alpha)^2}{3}
+=P_{ls}\frac{(1-\alpha)^5}{3^2}$$
+
+図\ref{fig:ver1.3}の時，3行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光遅延素子を通過する．
+3行1列目のセルの出力は次の式で表せられる．
+$$
+P_{out\,3,1}=(1-\alpha)P_{ls}\frac{(1-\alpha)^4}{3^2}=P_{ls}\frac{(1-\alpha)^5}{3^2}
+$$
+
+1行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光遅延素子を通過する．
+1行3列目のセルの出力は次の式で表せられる． 
+$$
+P_{out\,1,3}=(1-\alpha)P_{ls}\frac{(1-\alpha)^4}{3^2}=P_{ls}\frac{(1-\alpha)^5}{3^2}
+$$
+
+3行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器と光遅延素子を通過する．
+3行2列目のセルの出力は次の式で表せられる． 
+$$
+P_{out\,3,2}=(1-\alpha)^2 P_{ls}\frac{(1-\alpha)^5}{3^2}=P_{ls}\frac{(1-\alpha)^7}{3^2}
+$$
+
+2行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器と光遅延素子を通過する．
+2行3列目のセルの出力は次の式で表せられる．
+$$
+P_{out\,2,3}=(1-\alpha)^2 P_{ls}\frac{(1-\alpha)^5}{3^2}=P_{ls}\frac{(1-\alpha)^7}{3^2}
+$$
+
+3行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器を通過する．
+3行3列目のセルの出力は次の式で表せられる．
+$$
+P_{out\,3,3}=(1-\alpha)P_{ls}\frac{(1-\alpha)^5}{3^2}
+=P_{ls}\frac{(1-\alpha)^6}{3^2}
+$$
+以上の過程より，$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^6}{3^2}$と求まる．
+
+\item 状態11の場合\\
+光レースロジックアレイに光源からの光伝搬信号が
+入力されてから出力されるまでの各区間の信号伝搬経路を模式図\ref{fig:ver11}に表す．
+\begin{figure}[t!]
+\begin{center}
+\subfigure[入力から1区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex4.eps}
+\label{fig:ver11.1}}
+\subfigure[入力から2区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex5.eps}
+\label{fig:ver11.2}}\\
+\subfigure[入力から3区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex6.eps}
+\label{fig:ver11.3}}
+\subfigure[入力から4区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex7.eps}
+\label{fig:ver11.4}}
+\caption{状態11の時の光信号の伝搬の様子}
+\label{fig:ver11}
+\end{center}
+\end{figure}
+
+図\ref{fig:ver11.1}の時，1行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光遅延素子を通過する．
+1行1列目のセルの出力は次の式で表せられる． 
+$$P_{out\,1,1}=P_{ls}\frac{(1-\alpha)^2}{3}$$
+
+図\ref{fig:ver11.2}の時，2行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光遅延素子を通過する．
+2行1列目のセルの出力は次の式で表せられる． 
+$$P_{out\,2,1}=\frac{(1-\alpha)^2}{3}P_{ls}\frac{(1-\alpha)^2}{3}
+=P_{ls}\frac{(1-\alpha)^4}{3^2}$$
+
+1行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光遅延素子を通過する．
+1行2列目のセルの出力は次の式で表せられる．
+$$P_{out\,1,2}=\frac{(1-\alpha)^2}{3}P_{ls}\frac{(1-\alpha)^2}{3}
+=P_{ls}\frac{(1-\alpha)^4}{3^2}$$
+
+図\ref{fig:ver11.3}の時，3行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光遅延素子を通過する．
+3行1列目のセルの出力は次の式で表せられる．
+$$
+P_{out\,3,1}=(1-\alpha)P_{ls}\frac{(1-\alpha)^4}{3^2}=P_{ls}\frac{(1-\alpha)^5}{3^2}
+$$
+
+1行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光遅延素子を通過する．
+1行3列目のセルの出力は次の式で表せられる．
+$$
+P_{out\,1,3}=(1-\alpha)P_{ls}\frac{(1-\alpha)^4}{3^2}=P_{ls}\frac{(1-\alpha)^5}{3^2}
+$$
+
+2行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器，光分配器，光スイッチまたは光遅延素子の
+3つの損失を与える素子を通過する．
+2行2列目のセルの出力は次の式で表せられる．
+$$P_{out\,2,2}=\frac{(1-\alpha)^3}{3}(P_{ls}\frac{(1-\alpha)^4}{3^2}+P_{ls}\frac{(1-\alpha)^4}{3^2})
+=P_{ls}\frac{2(1-\alpha)^7}{3^3}$$
+
+図\ref{fig:ver11.4}の時，3行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器，光遅延素子を通過する．
+3行2列目のセルの出力は次の式で表せられる．
+$$P_{out\,3,2}=(1-\alpha)^2(P_{ls}\frac{(1-\alpha)^5}{3^2}+P_{ls}\frac{2(1-\alpha)^7}{3^3})
+=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}$$
+
+2行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器，光遅延素子を通過する．
+2行3列目のセルの出力は次の式で表せられる．
+$$P_{out\,2,3}=(1-\alpha)^2(P_{ls}\frac{(1-\alpha)^5}{3^2}+P_{ls}\frac{2(1-\alpha)^7}{3^3})
+=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}$$
+
+3行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器を通過する．
+3行3列目のセルの出力は次の式で表せられる．
+$$P_{out\,3,3}=(1-\alpha)P_{ls}\frac{2(1-\alpha)^7}{3^3}
+=P_{ls}\frac{2(1-\alpha)^8}{3^3}
+$$
+以上の過程より，$P_{out\,3,3}=P_{ls}\frac{2(1-\alpha)^8}{3^3}$と求まる．
+
+\item 状態12の場合\\
+光レースロジックアレイに光源からの光伝搬信号が
+入力されてから出力されるまでの各区間の信号伝搬経路を模式図\ref{fig:ver12}に表す．
+\begin{figure}[t!]
+\begin{center}
+\subfigure[入力から1区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex8.eps}
+\label{fig:ver12.1}}
+\subfigure[入力から2区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex9.eps}
+\label{fig:ver12.2}}\\
+\subfigure[入力から3区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex10.eps}
+\label{fig:ver12.3}}
+\subfigure[入力から4区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex11.eps}
+\label{fig:ver12.4}}\\
+\subfigure[入力から5区間目]{
+\includegraphics[keepaspectratio,scale=0.4]{fig/4/pex12.eps}
+\label{fig:ver12.5}}
+\caption{状態12の時の光信号の伝搬の様子}
+\label{fig:ver12}
+\end{center}
+\end{figure}
+
+図\ref{fig:ver12.1}の時，1行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光スイッチまたは光遅延素子の
+2つの損失を与える素子を通過する．
+1行1列目のセルの出力は次の式で表せられる． 
+$$P_{out\,1,1}=P_{ls}\frac{(1-\alpha)^2}{3}$$
+
+図\ref{fig:ver12.2}の時，2行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光スイッチまたは光遅延素子の
+2つの損失を与える素子を通過する．
+2行1列目のセルの出力は次の式で表せられる． 
+$$P_{out\,2,1}=\frac{(1-\alpha)^2}{3}P_{ls}\frac{(1-\alpha)^2}{3}
+=P_{ls}\frac{(1-\alpha)^4}{3^2}$$
+
+1行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光分配器，光遅延素子を通過する．
+1行2列目のセルの出力は次の式で表せられる．
+$$P_{out\,1,2\,to\,right}=\frac{(1-\alpha)^2}{3}P_{ls}\frac{(1-\alpha)^2}{3}
+=P_{ls}\frac{(1-\alpha)^4}{3^2}$$
+
+図\ref{fig:ver12.3}の時，3行1列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光遅延素子を通過する．
+3行1列目のセルの出力は次の式で表せられる．
+$$
+P_{out\,3,1}=(1-\alpha)P_{ls}\frac{(1-\alpha)^4}{3^2}=P_{ls}\frac{(1-\alpha)^5}{3^2}
+$$
+
+1行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光遅延素子を通過する．
+1行3列目のセルの出力は次の式で表せられる．
+$$
+P_{out\,1,3}=(1-\alpha)P_{ls}\frac{(1-\alpha)^4}{3^2}=P_{ls}\frac{(1-\alpha)^5}{3^2}
+$$
+
+2行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器，光分配器，光スイッチまたは光遅延素子の
+3つの損失を与える素子を通過する．
+2行2列目のセルの出力は次の式で表せられる．
+$$P_{out\,2,2}=\frac{(1-\alpha)^3}{3}(P_{ls}\frac{(1-\alpha)^4}{3^2}+P_{ls}\frac{(1-\alpha)^4}{3^2})
+=P_{ls}\frac{2(1-\alpha)^7}{3^3}$$
+
+図\ref{fig:ver12.4}の時，3行2列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器，光遅延素子を通過する．
+3行2列目のセルの出力は次の式で表せられる．
+$$P_{out\,3,3}=(1-\alpha)^2(P_{ls}\frac{(1-\alpha)^5}{3^2}+P_{ls}\frac{2(1-\alpha)^7}{3^3})
+=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}$$
+
+2行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器，光遅延素子を通過する．
+2行3列目のセルの出力は次の式で表せられる．
+$$P_{out\,2,3}=(1-\alpha)^2(P_{ls}\frac{(1-\alpha)^5}{3^2}+P_{ls}\frac{2(1-\alpha)^7}{3^3})
+=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}$$
+
+図\ref{fig:ver12.5}の時，3行3列目のセルにおいて
+光伝搬信号は1つの有向辺に沿って伝搬する際に
+光結合器を通過する．
+3行3列目のセルの出力は次の式で表せられる．
+\begin{eqnarray*}
+P_{out\,3,3}&=&(1-\alpha)(P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}+P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2})\\
+&=&P_{ls}\frac{2(1-\alpha)^8\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}
+\end{eqnarray*}
+以上の過程より，$P_{out\,3,3}=P_{ls}\frac{2(1-\alpha)^8\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}$と求まる．
+\end{itemize}
+このように，各状態での出力が求められる．
 各状態での出力を以下に示す．
 \begin{itemize}
-\item 状態1（図\ref{fig:all_switch_1}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^6}{3^2}$\\
-\item 状態2（図\ref{fig:all_switch_2}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^6}{3^2}$\\
-\item 状態3（図\ref{fig:all_switch_3}）の出力　$P_{out\,2,2}=P_{ls}\frac{2(1-\alpha)^7}{3^2}$\\
-\item 状態4（図\ref{fig:all_switch_4}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7\bigl\{2(1-\alpha)+1\bigl\}}{3^2}$\\
-\item 状態5（図\ref{fig:all_switch_5}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)+1\bigl\}}{3^2}$\\
-\item 状態6（図\ref{fig:all_switch_6}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7\bigl\{2(1-\alpha)+1\bigl\}}{3^2}$\\
-\item 状態7（図\ref{fig:all_switch_7}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)+1\bigl\}}{3^2}$\\
-\item 状態8（図\ref{fig:all_switch_8}）の出力　$P_{out\,2,2}=P_{ls}\frac{2(1-\alpha)^8}{3^2}$\\
-\item 状態9（図\ref{fig:all_switch_9}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7}{3^2}$\\
-\item 状態10（図\ref{fig:all_switch_10}）の出力　$P_{out\,2,2}=P_{ls}\frac{(1-\alpha)^7}{3^2}$\\
-\item 状態11（図\ref{fig:all_switch_11}）の出力　$P_{out\,2,2}=P_{ls}\frac{2(1-\alpha)^8}{3^3}$\\
-\item 状態12（図\ref{fig:all_switch_12}）の出力　$P_{out\,2,2}=P_{ls}\frac{2(1-\alpha)^8\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}$\\
+\item 状態1（図\ref{fig:all_switch_1}）の出力　$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^6}{3^2}$\\
+\item 状態2（図\ref{fig:all_switch_2}）の出力　$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^6}{3^2}$\\
+\item 状態3（図\ref{fig:all_switch_3}）の出力　$P_{out\,3,3}=P_{ls}\frac{2(1-\alpha)^7}{3^2}$\\
+\item 状態4（図\ref{fig:all_switch_4}）の出力　$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^7\bigl\{2(1-\alpha)+1\bigl\}}{3^2}$\\
+\item 状態5（図\ref{fig:all_switch_5}）の出力　$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)+1\bigl\}}{3^2}$\\
+\item 状態6（図\ref{fig:all_switch_6}）の出力　$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^7\bigl\{2(1-\alpha)+1\bigl\}}{3^2}$\\
+\item 状態7（図\ref{fig:all_switch_7}）の出力　$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^7\bigl\{\frac{2}{3}(1-\alpha)+1\bigl\}}{3^2}$\\
+\item 状態8（図\ref{fig:all_switch_8}）の出力　$P_{out\,3,3}=P_{ls}\frac{2(1-\alpha)^8}{3^2}$\\
+\item 状態9（図\ref{fig:all_switch_9}）の出力　$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^7}{3^2}$\\
+\item 状態10（図\ref{fig:all_switch_10}）の出力　$P_{out\,3,3}=P_{ls}\frac{(1-\alpha)^7}{3^2}$\\
+\item 状態11（図\ref{fig:all_switch_11}）の出力　$P_{out\,3,3}=P_{ls}\frac{2(1-\alpha)^8}{3^3}$\\
+\item 状態12（図\ref{fig:all_switch_12}）の出力　$P_{out\,3,3}=P_{ls}\frac{2(1-\alpha)^8\bigl\{\frac{2}{3}(1-\alpha)^2+1\bigl\}}{3^2}$
 \end{itemize}
 
 以上のスイッチ状態の中で，その出力強度が最小となるのは状態11（図\ref{fig:all_switch_11}）の場合である．
